@@ -1,5 +1,5 @@
-import type {Types} from 'mongoose';
-import {Schema, model} from 'mongoose';
+import type { Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 /**
  * This file defines the properties stored in a User
@@ -11,7 +11,6 @@ export type User = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   username: string;
   password: string;
-  dateJoined: Date;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -26,13 +25,9 @@ const UserSchema = new Schema({
   // The user's password
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
-  // The date the user joined
-  dateJoined: {
-    type: Date,
-    required: true
-  }
 });
 
 const UserModel = model<User>('User', UserSchema);

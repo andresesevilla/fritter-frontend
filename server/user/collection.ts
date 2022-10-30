@@ -1,5 +1,6 @@
-import type {HydratedDocument, Types} from 'mongoose';
-import type {User} from './model';
+import AnxietyShieldCollection from '../anxietyshield/collection';
+import type { HydratedDocument, Types } from 'mongoose';
+import type { User } from './model';
 import UserModel from './model';
 
 /**
@@ -19,10 +20,9 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>>} - The newly created user
    */
   static async addOne(username: string, password: string): Promise<HydratedDocument<User>> {
-    const dateJoined = new Date();
-
-    const user = new UserModel({username, password, dateJoined});
+    const user = new UserModel({ username, password });
     await user.save(); // Saves user to MongoDB
+    await AnxietyShieldCollection.addOne(user.id);
     return user;
   }
 
@@ -33,7 +33,7 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUserId(userId: Types.ObjectId | string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({_id: userId});
+    return UserModel.findOne({ _id: userId });
   }
 
   /**
@@ -43,15 +43,15 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUsername(username: string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({username: new RegExp(`^${username.trim()}$`, 'i')});
+    return UserModel.findOne({ username: new RegExp(`^${username?.trim()}$`, 'i') });
   }
 
   /**
-   * Find a user by username (case insensitive).
+   * Find a user by username (case insensitive) and password.
    *
    * @param {string} username - The username of the user to find
    * @param {string} password - The password of the user to find
-   * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
+   * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username and password, if any
    */
   static async findOneByUsernameAndPassword(username: string, password: string): Promise<HydratedDocument<User>> {
     return UserModel.findOne({
@@ -64,32 +64,14 @@ class UserCollection {
    * Update user's information
    *
    * @param {string} userId - The userId of the user to update
-   * @param {Object} userDetails - An object with the user's updated credentials
+   * @param {string} password - The new password of the user
    * @return {Promise<HydratedDocument<User>>} - The updated user
    */
-  static async updateOne(userId: Types.ObjectId | string, userDetails: {password?: string; username?: string}): Promise<HydratedDocument<User>> {
-    const user = await UserModel.findOne({_id: userId});
-    if (userDetails.password) {
-      user.password = userDetails.password;
-    }
-
-    if (userDetails.username) {
-      user.username = userDetails.username;
-    }
-
+  static async updateOne(userId: Types.ObjectId | string, password: string): Promise<HydratedDocument<User>> {
+    const user = await UserModel.findOne({ _id: userId });
+    user.password = password;
     await user.save();
     return user;
-  }
-
-  /**
-   * Delete a user from the collection.
-   *
-   * @param {string} userId - The userId of user to delete
-   * @return {Promise<Boolean>} - true if the user has been deleted, false otherwise
-   */
-  static async deleteOne(userId: Types.ObjectId | string): Promise<boolean> {
-    const user = await UserModel.deleteOne({_id: userId});
-    return user !== null;
   }
 }
 

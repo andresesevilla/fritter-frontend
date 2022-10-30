@@ -1,6 +1,5 @@
-import type {Request, Response} from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
-import FreetCollection from '../freet/collection';
 import UserCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as util from './util';
@@ -118,55 +117,42 @@ router.post(
 /**
  * Update a user's profile.
  *
- * @name PATCH /api/users
+ * @name PUT /api/users
  *
- * @param {string} username - The user's new username
  * @param {string} password - The user's new password
  * @return {UserResponse} - The updated user
  * @throws {403} - If user is not logged in
- * @throws {409} - If username already taken
- * @throws {400} - If username or password are not of the correct format
+ * @throws {400} - If password is not of the correct format
  */
 router.patch(
   '/',
   [
     userValidator.isUserLoggedIn,
-    userValidator.isValidUsername,
-    userValidator.isUsernameNotAlreadyInUse,
     userValidator.isValidPassword
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const user = await UserCollection.updateOne(userId, req.body);
+
+    if (req.body.username) {
+      res.status(400).json({
+        error: 'You may not change your username. No changes were made to your account.'
+      });
+      return;
+    }
+
+    if (!req.body.password) {
+      res.status(400).json({
+        error: 'You must provide a new password.'
+      });
+      return;
+    }
+
+    const user = await UserCollection.updateOne(userId, req.body.password);
     res.status(200).json({
-      message: 'Your profile was updated successfully.',
+      message: 'Your password was updated successfully.',
       user: util.constructUserResponse(user)
     });
   }
 );
 
-/**
- * Delete a user.
- *
- * @name DELETE /api/users
- *
- * @return {string} - A success message
- * @throws {403} - If the user is not logged in
- */
-router.delete(
-  '/',
-  [
-    userValidator.isUserLoggedIn
-  ],
-  async (req: Request, res: Response) => {
-    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    await UserCollection.deleteOne(userId);
-    await FreetCollection.deleteMany(userId);
-    req.session.userId = undefined;
-    res.status(200).json({
-      message: 'Your account has been deleted successfully.'
-    });
-  }
-);
-
-export {router as userRouter};
+export { router as userRouter };
