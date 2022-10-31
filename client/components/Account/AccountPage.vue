@@ -5,15 +5,22 @@
   <main>
     <section>
       <header>
-        <h2>Account settings for @{{ $store.state.username }}</h2>
+        <h2>Account Management</h2>
       </header>
+      <LogoutForm />
       <ChangePasswordForm />
     </section>
     <section>
       <header>
-        <h2>Account management</h2>
+        <h2>Private Circles</h2>
+        <CreatePrivateCircleForm />
       </header>
-      <LogoutForm />
+    </section>
+    <section>
+      <header>
+        <h2>Follows</h2>
+        <CreateFollowForm />
+      </header>
     </section>
   </main>
 </template>
@@ -21,12 +28,16 @@
 <script>
 import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
 import LogoutForm from '@/components/Account/LogoutForm.vue';
+import CreatePrivateCircleForm from '@/components/PrivateCircle/CreatePrivateCircleForm.vue';
+import CreateFollowForm from '@/components/Follow/CreateFollowForm.vue';
 
 export default {
   name: 'AccountPage',
   components: {
     ChangePasswordForm,
-    LogoutForm
+    LogoutForm,
+    CreatePrivateCircleForm,
+    CreateFollowForm
   }
 };
 </script>
