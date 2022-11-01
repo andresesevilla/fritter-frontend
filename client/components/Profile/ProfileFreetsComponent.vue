@@ -1,36 +1,38 @@
 <!-- Display freets on profile -->
 
 <template>
-  <main>
-    <section v-if="isValidUsername">
-      <header>
-        <h2>Profile: @{{ $route.params.username }}</h2>
-      </header>
-      <!-- <section v-if="$store.state.freets.length">
+  <div>
+    <main v-if="isValidUsername">
+      <section>
+        <header>
+          <h2>Profile: @{{ $route.params.username }}</h2>
+        </header>
+        <!-- <section v-if="$store.state.freets.length">
         <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
       </section>
       <article v-else>
         <h3>No freets found.</h3>
       </article> -->
-    </section>
-    <section v-else>
-      This is not a valid username (hopefully this can be replaced with the 404 page (without redirecting) in the future)
-    </section>
-  </main>
+      </section>
+    </main>
+    <NotFound v-else />
+  </div>
 </template>
 
 <script>
+import NotFound from '../../NotFound.vue';
 
 export default {
   name: 'ProfileFreets',
   // components: { FreetComponent },
+  components: { NotFound },
   // async mounted() {
   //   await this.getFreets();
   // },
   data() {
-    return { 
+    return {
       isValidUsername: true
-     };
+    };
   },
   // methods: {
   //   async getFreets() {
