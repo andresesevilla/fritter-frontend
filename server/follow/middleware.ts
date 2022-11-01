@@ -66,7 +66,7 @@ const isValidUnfollow = async (req: Request, res: Response, next: NextFunction) 
 const isValidFollowLookup = async (req: Request, res: Response, next: NextFunction) => {
 
     // Must be valid followee
-    const followeeUsername = req.query.followeeId as string;
+    const followeeUsername = req.query.followeeUsername as string;
     if (followeeUsername) {
         const followee = await UserCollection.findOneByUsername(followeeUsername);
         if (!followee) {
@@ -76,7 +76,8 @@ const isValidFollowLookup = async (req: Request, res: Response, next: NextFuncti
     }
 
     // Must be valid follower
-    const followerUsername = req.query.followerId as string;
+    const followerUsername = req.query.followerUsername as string;
+    console.log(`Follower username is ${followerUsername}, the whole query is: ${req.query}`)
     if (followerUsername) {
         const follower = await UserCollection.findOneByUsername(followerUsername);
         if (!follower) {
