@@ -17,8 +17,8 @@
       <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username }}">
         Profile
       </router-link>
-      <router-link to="/account">
-        Account
+      <router-link to="/settings">
+        Settings
       </router-link>
       <a href="#" v-on:click="signOut">
         Sign Out

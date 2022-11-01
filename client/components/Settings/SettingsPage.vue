@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
+import ChangePasswordForm from '@/components/Settings/ChangePasswordForm.vue';
 import CreatePrivateCircleForm from '@/components/PrivateCircle/CreatePrivateCircleForm.vue';
 import CreateFollowForm from '@/components/Follow/CreateFollowForm.vue';
 

@@ -2,18 +2,18 @@
 
 <template>
   <div>
-    <FreetsPage v-if="$store.state.username" />
-    <LoginPage v-else />
+    <FreetsComponent v-if="$store.state.username" />
+    <LoginComponent v-else />
   </div>
 </template>
 
 <script>
-import LoginPage from '@/components/Login/LoginPage.vue';
-import FreetsPage from '@/components/Freet/FreetsPage.vue';
+import LoginComponent from '@/components/Login/LoginComponent.vue';
+import FreetsComponent from '@/components/Freet/FreetsComponent.vue';
 
 export default {
   name: 'HomePage',
-  components: { LoginPage, FreetsPage },
+  components: { LoginComponent, FreetsComponent },
   mounted() {
   }
 };
