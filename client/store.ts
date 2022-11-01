@@ -9,7 +9,8 @@ Vue.use(Vuex);
  */
 const store = new Vuex.Store({
   state: {
-    filter: null, // Username to filter shown freets by (null = show all)
+    showAllFreets: false, // By default, don't show all freets (show feed instead)
+    filter: null, // Username to filter shown freets by (null = show all) (overrides showAllFreets)
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
@@ -23,6 +24,13 @@ const store = new Vuex.Store({
       setTimeout(() => {
         Vue.delete(state.alerts, payload.message);
       }, 3000);
+    },
+    setShowAllFreets(state, value) {
+      /**
+       * Update whether all freets are shown
+       * @param value - new value to set
+       */
+      state.showAllFreets = value;
     },
     setUsername(state, username) {
       /**
@@ -49,7 +57,10 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      let url = state.showAllFreets ? '/api/freets' : '/api/freets?feed';
+      if (state.filter) {
+        url = `/api/freets?author=${state.filter}`;
+      }
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
     }

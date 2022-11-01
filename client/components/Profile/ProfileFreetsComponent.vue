@@ -7,12 +7,12 @@
         <header>
           <h2>Profile: @{{ $route.params.username }}</h2>
         </header>
-        <!-- <section v-if="$store.state.freets.length">
+        <section v-if="$store.state.freets.length">
         <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
       </section>
       <article v-else>
         <h3>No freets found.</h3>
-      </article> -->
+      </article>
       </section>
     </main>
     <NotFound v-else />
@@ -21,43 +21,42 @@
 
 <script>
 import NotFound from '../../NotFound.vue';
+import FreetComponent from '@/components/Freet/FreetComponent.vue';
 
 export default {
   name: 'ProfileFreets',
-  // components: { FreetComponent },
-  components: { NotFound },
-  // async mounted() {
-  //   await this.getFreets();
-  // },
+  components: { NotFound, FreetComponent },
+  async mounted() {
+    await this.getFreets();
+  },
   data() {
     return {
       isValidUsername: true
     };
   },
-  // methods: {
-  //   async getFreets() {
-  //     const value = this.$route.params.username
-  //     const url = `/api/freets?author=${value}`;
-  //     try {
-  //       const r = await fetch(url);
-  //       const res = await r.json();
-  //       if (!r.ok) {
-  //         throw new Error(res.error);
-  //       }
-  //       this.$store.commit('updateFilter', value);
-  //       this.$store.commit('updateFreets', res);
-  //     } catch (e) {
-  //       if (value === this.$store.state.filter) {
-  //         this.$store.commit('updateFilter', null);
-  //         this.$store.commit('refreshFreets');
-  //       } else {
-  //         this.isValidUsername = false;
-  //       }
-  //       this.$set(this.alerts, e, 'error');
-  //       setTimeout(() => this.$delete(this.alerts, e), 3000);
-  //     }
-  //   }
-  // }
+  watch: {
+    async '$route'() {
+      await this.getFreets();
+    }
+  },
+  methods: {
+    async getFreets() {
+      const value = this.$route.params.username
+      const url = `/api/freets?author=${value}`;
+      try {
+        const r = await fetch(url);
+        const res = await r.json();
+        if (!r.ok) {
+          throw new Error(res.error);
+        }
+        this.isValidUsername = true;
+        this.$store.commit('updateFilter', value);
+        this.$store.commit('updateFreets', res);
+      } catch (e) {
+        this.isValidUsername = false;
+      }
+    }
+  }
 };
 </script>
 

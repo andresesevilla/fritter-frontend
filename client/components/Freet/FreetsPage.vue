@@ -10,15 +10,17 @@
       <header>
         <div class="left">
           <h2>
-            Viewing all freets
-            <span v-if="$store.state.filter">
-              by @{{ $store.state.filter }}
+            Viewing
+            <span v-if="$store.state.showAllFreets">
+              all freets
+            </span>
+            <span v-else>
+              feed
             </span>
           </h2>
         </div>
         <div class="right">
-          <GetFreetsForm ref="getFreetsForm" value="author" placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get freets" />
+          <GetFreetsForm />
         </div>
       </header>
       <section v-if="$store.state.freets.length">
@@ -52,9 +54,6 @@ import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
 export default {
   name: 'FreetPage',
   components: { FreetComponent, GetFreetsForm, CreateFreetForm },
-  mounted() {
-    this.$refs.getFreetsForm.submit();
-  }
 };
 </script>
 
