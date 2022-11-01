@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import HomePage from './components/Home/HomePage.vue';
 import SettingsPage from './components/Settings/SettingsPage.vue';
 import ProfilePage from './components/Profile/ProfilePage.vue';
+import FollowPage from './components/Follow/FollowPage.vue';
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -11,6 +12,8 @@ const routes = [
   { path: '/', name: 'Home', component: HomePage },
   { path: '/settings', name: 'Settings', component: SettingsPage },
   { path: '/@:username', name: 'Profile', component: ProfilePage },
+  { path: '/@:username/followers', name: 'Followers', component: FollowPage },
+  { path: '/@:username/following', name: 'Following', component: FollowPage },
   { path: '*', name: 'Not Found', component: NotFound }
 ];
 

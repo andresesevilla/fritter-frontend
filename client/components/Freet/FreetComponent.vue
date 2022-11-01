@@ -5,7 +5,9 @@
   <article class="freet">
     <header>
       <h3 class="author">
-        @{{ freet.author }}
+        <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
+          @{{ freet.author }}
+        </router-link>
       </h3>
     </header>
     <p class="content">
@@ -14,7 +16,7 @@
     <p class="info">
       Posted at {{ freet.dateCreated }}
     </p>
-    <p v-if="freet.restrictAccess">Private Circle: {{freet.restrictAccess}}</p>
+    <p v-if="freet.restrictAccess">Private Circle: {{ freet.restrictAccess }}</p>
     <div v-if="$store.state.username === freet.author" class="actions">
       <button @click="deleteFreet">
         🗑️ Delete
