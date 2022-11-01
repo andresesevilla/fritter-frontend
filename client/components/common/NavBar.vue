@@ -17,6 +17,9 @@
       <router-link to="/account">
         Account
       </router-link>
+      <a href="#" v-on:click="signOut">
+        Sign Out
+      </a>
     </div>
     <section class="alerts">
       <article v-for="(status, alert, index) in $store.state.alerts" :key="index" :class="status">
@@ -25,6 +28,39 @@
     </section>
   </nav>
 </template>
+
+
+<script>
+export default {
+  methods: {
+    async signOut() {
+
+      // Make the request with the URL and options
+      const r = await fetch(
+        '/api/users/session',
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin' // Sends express-session credentials with request
+        }
+      );
+
+      // Update the username to be empty
+      this.$store.commit('setUsername', null);
+
+      // Navigate home if user is not already home
+      if (this.$router.currentRoute.name !== 'Home') {
+        this.$router.push({ name: 'Home' });
+      }
+
+      // Alert user that they have signed out
+      this.$store.commit('alert', {
+        message: 'You are now signed out!', status: 'success'
+      })
+    }
+  }
+};
+</script>
 
 <style scoped>
 nav {
