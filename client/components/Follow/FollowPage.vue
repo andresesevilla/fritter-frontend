@@ -5,18 +5,20 @@
     <main v-if="isValidUsername">
       <section>
         <header>
-          <h2>{{$route.name}}: @{{ $route.params.username }}</h2>
+          <h2>
+            {{ $route.name }}:&nbsp;
+            <router-link :to="{ name: 'Profile', params: { username: $route.params.username } }">
+               @{{ $route.params.username }}
+            </router-link>
+          </h2>
         </header>
-        <section>
-          <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }">Back to Profile
+        <section v-if="follows.length">
+          <router-link v-for="follow in follows" :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
           </router-link>
         </section>
-        <!-- <section v-if="$store.state.freets.length">
-          <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
-        </section>
         <article v-else>
-          <h3>No {{$route.name.toLowerCase()}} found.</h3>
-        </article> -->
+          <h3>No {{ $route.name.toLowerCase() }} found.</h3>
+        </article>
       </section>
     </main>
     <NotFound v-else />
@@ -34,7 +36,8 @@ export default {
   },
   data() {
     return {
-      isValidUsername: true
+      isValidUsername: true,
+      follows: []
     };
   },
   watch: {
@@ -46,6 +49,7 @@ export default {
     async getFollows() {
       const username = this.$route.params.username;
       const query = this.$route.name === 'Followers' ? 'followee' : 'follower';
+      const desired = this.$route.name === 'Followers' ? 'follower' : 'followee';
       const url = `/api/follows?${query}Username=${username}`;
       try {
         const r = await fetch(url);
@@ -54,7 +58,7 @@ export default {
           throw new Error(res.error);
         }
         this.isValidUsername = true;
-        this.$store.commit('updateFilter', username);
+        this.follows = res.map((value) => { return value[desired] })
       } catch (e) {
         this.isValidUsername = false;
       }

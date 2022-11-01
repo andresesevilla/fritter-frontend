@@ -8,9 +8,9 @@
           <h2>Profile: @{{ $route.params.username }}</h2>
         </header>
         <section>
-          <router-link :to="{ name: 'Following', params: { username: this.$store.state.username } }">View Following
+          <router-link :to="{ name: 'Following', params: { username: $route.params.username } }">View Following
           </router-link>
-          <router-link :to="{ name: 'Followers', params: { username: this.$store.state.username } }">View Followers
+          <router-link :to="{ name: 'Followers', params: { username: $route.params.username } }">View Followers
           </router-link>
         </section>
         <section v-if="$store.state.freets.length">
