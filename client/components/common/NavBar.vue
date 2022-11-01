@@ -14,6 +14,9 @@
       <router-link to="/">
         Home
       </router-link>
+      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username }}">
+        Profile
+      </router-link>
       <router-link to="/account">
         Account
       </router-link>

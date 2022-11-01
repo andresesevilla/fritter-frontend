@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomePage from './components/Home/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
+import ProfilePage from './components/Profile/ProfilePage.vue';
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -9,6 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
   { path: '/account', name: 'Account', component: AccountPage },
+  { path: '/@:username', name: 'Profile', component: ProfilePage },
   { path: '*', name: 'Not Found', component: NotFound }
 ];
 
