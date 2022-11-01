@@ -10,15 +10,12 @@
         Fritter
       </h1>
     </div>
-    <div class="right">
-      <router-link v-if="$store.state.username" to="/">
+    <div v-if="$store.state.username" class="right">
+      <router-link to="/">
         Home
       </router-link>
-      <router-link v-if="$store.state.username" to="/account">
+      <router-link to="/account">
         Account
-      </router-link>
-      <router-link v-else to="/login">
-        Login
       </router-link>
     </div>
     <section class="alerts">
