@@ -4,17 +4,19 @@
 
 <template>
   <nav>
-    <div class="left">
-      <img src="../../public/logo.svg">
-      <h1 class="title">
-        Fritter
-      </h1>
-    </div>
+    <router-link to="/">
+      <div class="left">
+        <img src="../../public/logo.svg">
+        <h1 class="title">
+          Fritter
+        </h1>
+      </div>
+    </router-link>
     <div v-if="$store.state.username" class="right">
       <router-link to="/">
         Home
       </router-link>
-      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username }}">
+      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }">
         Profile
       </router-link>
       <router-link to="/settings">
