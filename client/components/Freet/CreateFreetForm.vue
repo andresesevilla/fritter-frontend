@@ -10,7 +10,9 @@
       </div>
       <div v-if="$store.state.privatecircles.length">
         <label for="privatecircle">Private Circle (Optional):</label>
-        <input name="privatecircle" v-model="privatecircle" id="privatecircle" />
+        <select name="privatecircle" v-model="privatecircle" id="privatecircle">
+          <option v-for="privatecircle in $store.state.privatecircles">{{privatecircle.name}}</option>
+        </select>
       </div>
       <div v-else>(You do not have any Private Circles, so options are hidden)</div>
     </article>
