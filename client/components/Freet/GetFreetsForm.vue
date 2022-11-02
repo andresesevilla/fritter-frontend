@@ -8,7 +8,6 @@
 
 
 <script>
-import InlineForm from '@/components/common/InlineForm.vue';
 
 export default {
   name: 'GetFreetsForm',

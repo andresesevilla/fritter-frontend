@@ -13,6 +13,15 @@
           <router-link :to="{ name: 'Followers', params: { username: $route.params.username } }">View Followers
           </router-link>
         </section>
+        <section v-if="follower">
+          <p>Follows you</p>
+        </section>
+        <section v-if="$route.params.username != $store.state.username">
+          <form @submit.prevent="submit" v-on:change="submit">
+            <label for="followingUser">Following </label>
+            <input v-model="following" type="checkbox" id="followingUser">
+          </form>
+        </section>
         <section v-if="$store.state.freets.length">
           <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
         </section>
@@ -33,22 +42,94 @@ export default {
   name: 'ProfilePage',
   components: { NotFound, FreetComponent },
   async mounted() {
-    await this.getFreets();
+    const getFreets = this.getFreets();
+    const getFollower = this.getFollower();
+    const getFollowing = this.getFollowing();
+    await getFreets;
+    await getFollower;
+    await getFollowing;
   },
   data() {
     return {
-      isValidUsername: true
+      isValidUsername: true,
+      follower: false,
+      following: false
     };
   },
   watch: {
     async '$route'() {
-      await this.getFreets();
+      const getFreets = this.getFreets();
+      const getFollower = this.getFollower();
+      const getFollowing = this.getFollowing();
+      await getFreets;
+      await getFollower;
+      await getFollowing;
     }
   },
   methods: {
+    async submit() {
+      if (this.following) {
+        const url = 'api/follows'
+        const fields = { username: this.$route.params.username }
+        const options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin' // Sends express-session credentials with request
+        };
+        options.body = JSON.stringify(fields);
+
+        try {
+          const r = await fetch(url, options);
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch (e) {
+          console.log(`Encountered an issue when trying to follow: ${e}`)
+        }
+
+
+      } else {
+        const url = `api/follows/${this.$route.params.username}`
+        const fields = { username: this.$route.params.username }
+        const options = {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin' // Sends express-session credentials with request
+        };
+
+        try {
+          const r = await fetch(url, options);
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch (e) {
+          console.log(`Encountered an issue when trying to unfollow: ${e}`)
+        }
+      }
+    },
+    async getFollowing() {
+      const profileUsername = this.$route.params.username;
+      const loggedInUsername = this.$store.state.username;
+      const url = `/api/follows?followerUsername=${loggedInUsername}&followeeUsername=${profileUsername}`;
+      const r = await fetch(url);
+      if (r.status !== 204) {
+        this.following = true;
+      }
+    },
+    async getFollower() {
+      const profileUsername = this.$route.params.username;
+      const loggedInUsername = this.$store.state.username;
+      const url = `/api/follows?followerUsername=${profileUsername}&followeeUsername=${loggedInUsername}`;
+      const r = await fetch(url);
+      if (r.status !== 204) {
+        this.follower = true;
+      }
+    },
     async getFreets() {
-      const value = this.$route.params.username
-      const url = `/api/freets?author=${value}`;
+      const username = this.$route.params.username
+      const url = `/api/freets?author=${username}`;
       try {
         const r = await fetch(url);
         const res = await r.json();
@@ -56,7 +137,7 @@ export default {
           throw new Error(res.error);
         }
         this.isValidUsername = true;
-        this.$store.commit('updateFilter', value);
+        this.$store.commit('updateFilter', username);
         this.$store.commit('updateFreets', res);
       } catch (e) {
         this.isValidUsername = false;

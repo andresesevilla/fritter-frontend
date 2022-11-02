@@ -12,10 +12,9 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''}
+        {id: 'username', label: 'Username'}
       ],
       title: 'Follow a user',
-      refreshFollows: true,
       callback: () => {
         const message = 'Successfully followed user!';
         this.$set(this.alerts, message, 'success');

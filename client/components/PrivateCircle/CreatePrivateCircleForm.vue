@@ -15,7 +15,6 @@ export default {
         {id: 'name', label: 'Name', value: ''}
       ],
       title: 'Create a Private Circle',
-      refreshPrivateCircles: true,
       callback: () => {
         const message = 'Successfully created a Private Circle!';
         this.$set(this.alerts, message, 'success');
