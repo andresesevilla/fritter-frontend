@@ -9,6 +9,9 @@
           member
       }}</router-link>
     </section>
+    <button @click="deletePrivateCircle">
+        🗑️ Delete
+      </button>
   </article>
 </template>
 
@@ -27,49 +30,21 @@ export default {
     };
   },
   methods: {
-    // deleteFreet() {
-    //   /**
-    //    * Deletes this freet.
-    //    */
-    //   const params = {
-    //     method: 'DELETE',
-    //     callback: () => {
-    //       this.$store.commit('alert', {
-    //         message: 'Successfully deleted freet!', status: 'success'
-    //       });
-    //     }
-    //   };
-    //   this.request(params);
-    // },
-    // async request(params) {
-    //   /**
-    //    * Submits a request to the freet's endpoint
-    //    * @param params - Options for the request
-    //    * @param params.body - Body for the request, if it exists
-    //    * @param params.callback - Function to run if the the request succeeds
-    //    */
-    //   const options = {
-    //     method: params.method, headers: { 'Content-Type': 'application/json' }
-    //   };
-    //   if (params.body) {
-    //     options.body = params.body;
-    //   }
-
-    //   try {
-    //     const r = await fetch(`/api/freets/${this.freet._id}`, options);
-    //     if (!r.ok) {
-    //       const res = await r.json();
-    //       throw new Error(res.error);
-    //     }
-
-    //     this.$store.commit('refreshFreets');
-
-    //     params.callback();
-    //   } catch (e) {
-    //     this.$set(this.alerts, e, 'error');
-    //     setTimeout(() => this.$delete(this.alerts, e), 3000);
-    //   }
-    // }
+    async deletePrivateCircle() {
+      const options = {
+        method: 'DELETE', headers: { 'Content-Type': 'application/json' }
+      };
+      try {
+        const r = await fetch(`/api/privatecircles/${this.privatecircle.name}`, options);
+        if (!r.ok) {
+          const res = await r.json();
+          console.log(`The following error occurred when trying to delete the private circle: ${res.error}`)
+        }
+        this.$store.commit('refreshPrivateCircles');
+      } catch (e) {
+        console.log(`The following error occurred when trying to delete the private circle: ${e}`)
+      }
+    },
   }
 };
 </script>
