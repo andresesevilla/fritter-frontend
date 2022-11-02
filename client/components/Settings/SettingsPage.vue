@@ -5,28 +5,20 @@
   <main>
     <section>
       <header>
-        <h2>Account Management</h2>
+        <h2>Settings</h2>
       </header>
       <ChangePasswordForm />
-    </section>
-    <section>
-      <header>
-        <h2>Private Circles</h2>
-        <CreatePrivateCircleForm />
-      </header>
     </section>
   </main>
 </template>
 
 <script>
 import ChangePasswordForm from '@/components/Settings/ChangePasswordForm.vue';
-import CreatePrivateCircleForm from '@/components/PrivateCircle/CreatePrivateCircleForm.vue';
 
 export default {
   name: 'AccountPage',
   components: {
-    ChangePasswordForm,
-    CreatePrivateCircleForm
+    ChangePasswordForm
   }
 };
 </script>

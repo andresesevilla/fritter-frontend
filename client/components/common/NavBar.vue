@@ -19,6 +19,9 @@
       <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }">
         Profile
       </router-link>
+      <router-link to="/privatecircles">
+        Private Circles
+      </router-link>
       <router-link to="/settings">
         Settings
       </router-link>
