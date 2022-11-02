@@ -5,13 +5,21 @@
   <article class="privatecircle">
     <h3>{{ privatecircle.name }}</h3>
     <section>
-      <router-link v-for="member in privatecircle.members" :to="{ name: 'Profile', params: { username: member } }"> @{{
-          member
-      }}</router-link>
+      <router-link v-for="member in privatecircle.members" :to="{ name: 'Profile', params: { username: member.username } }">
+        @{{ member.username }}</router-link>
     </section>
+    <form @submit.prevent="submit" v-on:change="editPrivateCircle">
+      <div v-if="$store.state.privatecircles.length">
+        <label for="username">Toggle a user's membership:</label>
+        <select name="username" v-model="username" id="username">
+          <option v-for="username in followers">{{ username }}</option>
+        </select>
+      </div>
+      <div v-else>(You do not have any Private Circles, so options are hidden)</div>
+    </form>
     <button @click="deletePrivateCircle">
-        🗑️ Delete
-      </button>
+      🗑️ Delete
+    </button>
   </article>
 </template>
 
@@ -25,11 +33,33 @@ export default {
       required: true
     }
   },
+  async mounted() {
+    await this.getFollowers();
+  },
   data() {
     return {
+      username: '',
+      followers: []
     };
   },
   methods: {
+    async getFollowers() {
+      const username = this.$store.state.username;
+      const query = 'followee';
+      const desired = 'follower';
+      const url = `/api/follows?${query}Username=${username}`;
+      try {
+        const r = await fetch(url);
+        const res = await r.json();
+        if (!r.ok) {
+          throw new Error(res.error);
+        }
+        this.isValidUsername = true;
+        this.followers = res.map((value) => { return value[desired] });
+      } catch (e) {
+        this.isValidUsername = false;
+      }
+    },
     async deletePrivateCircle() {
       const options = {
         method: 'DELETE', headers: { 'Content-Type': 'application/json' }
@@ -45,6 +75,30 @@ export default {
         console.log(`The following error occurred when trying to delete the private circle: ${e}`)
       }
     },
+    async editPrivateCircle() {
+      const options = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin'
+      };
+      const fields = {
+        username: this.username,
+      }
+      options.body = JSON.stringify(fields);
+      try {
+        const r = await fetch(`/api/privatecircles/${this.privatecircle.name}`, options);
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+        }
+
+        this.$store.commit('refreshPrivateCircles');
+        this.username = '';
+
+      } catch (e) {
+        console.log(`Encountered the following error: ${e}`)
+      }
+    }
   }
 };
 </script>
