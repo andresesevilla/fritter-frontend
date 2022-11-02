@@ -69,6 +69,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the user's Private Circles.
        */
+      state.privatecircles = [];
       const url = '/api/privatecircles';
       const res = await fetch(url).then(async r => r.json());
       state.privatecircles = res.privateCircles;

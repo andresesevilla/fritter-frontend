@@ -7,6 +7,9 @@
     <section v-if="$store.state.privatecircles.length">
       <PrivateCircleComponent v-for="privatecircle in $store.state.privatecircles" :key="privatecircle.id" :privatecircle="privatecircle" />
     </section>
+    <section v-else>
+      <h3>No Private Circles found.</h3>
+    </section>
   </main>
 
 </template>
@@ -19,7 +22,7 @@ export default {
   name: 'PrivateCirclePage',
   components: { CreatePrivateCircleForm, PrivateCircleComponent },
   async mounted() {
-    this.$store.commit('refreshPrivateCircles');
+    await this.$store.commit('refreshPrivateCircles');
   }
 };
 </script>
