@@ -1,18 +1,20 @@
 <template>
   <div id="app">
     <header>
-      <NavBar />
+      <TopBar />
+      <NavBar v-if="$store.state.username"/>
     </header>
     <router-view />
   </div>
 </template>
 
 <script>
+import TopBar from '@/components/common/TopBar.vue';
 import NavBar from '@/components/common/NavBar.vue';
 
 export default {
   name: 'App',
-  components: {NavBar},
+  components: {TopBar, NavBar},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/users/session', {
@@ -44,6 +46,8 @@ body {
 
 main {
   padding: 0 5em 5em;
+  margin-left: 160px;
+  margin-top: 65px;
 }
 
 .alerts {
