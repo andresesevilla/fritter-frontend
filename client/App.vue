@@ -4,7 +4,7 @@
       <TopBar />
       <NavBar v-if="$store.state.username"/>
     </header>
-    <router-view />
+    <router-view :style="{'margin-left': `${$store.state.username ? 100 : 0}px`}"/>
   </div>
 </template>
 
@@ -46,7 +46,6 @@ body {
 
 main {
   padding: 0 5em 5em;
-  margin-left: 160px;
   margin-top: 65px;
 }
 
