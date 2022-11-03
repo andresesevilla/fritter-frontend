@@ -16,6 +16,7 @@ export default {
   },
   mounted() {
     this.submit();
+    this.$store.commit('refreshShieldedTopics');
   },
   methods: {
     async submit() {

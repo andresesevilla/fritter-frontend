@@ -3,30 +3,39 @@
 
 <template>
   <article class="freet">
-    <header>
-      <h3 class="author">
-        <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
-          @{{ freet.author }}
-        </router-link>
-      </h3>
-    </header>
-    <p class="content">
-      {{ freet.content }}
-    </p>
-    <p class="info">
-      Posted at {{ freet.dateCreated }}
-    </p>
-    <p v-if="freet.restrictAccess">Private Circle: {{ freet.restrictAccess }}</p>
-    <div v-if="$store.state.username === freet.author" class="actions">
-      <button @click="deleteFreet">
-        🗑️ Delete
-      </button>
+    <div v-if="!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway">
+      <header>
+        <h3 class="author">
+          <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
+            @{{ freet.author }}
+          </router-link>
+        </h3>
+      </header>
+      <p class="content">
+        {{ freet.content }}
+      </p>
+      <p class="info">
+        Posted at {{ freet.dateCreated }}
+      </p>
+      <p v-if="freet.restrictAccess">Private Circle: {{ freet.restrictAccess }}</p>
+      <div v-if="$store.state.username === freet.author" class="actions">
+        <button @click="deleteFreet">
+          🗑️ Delete
+        </button>
+      </div>
+      <section class="alerts">
+        <article v-for="(status, alert, index) in alerts" :key="index" :class="status">
+          <p>{{ alert }}</p>
+        </article>
+      </section>
     </div>
-    <section class="alerts">
-      <article v-for="(status, alert, index) in alerts" :key="index" :class="status">
-        <p>{{ alert }}</p>
-      </article>
-    </section>
+    <div v-else>
+      <h3>
+        Anxiety Shield
+      </h3>
+      <p>This Freet contains the following topic(s): {{ freet.topics.join(" ") }}</p>
+      <button @click="()=>{viewAnyway = true}">View Anyway</button>
+    </div>
   </article>
 </template>
 
@@ -42,8 +51,14 @@ export default {
   },
   data() {
     return {
-      alerts: {} // Displays success/error messages encountered during freet modification
+      alerts: {}, // Displays success/error messages encountered during freet modification
+      viewAnyway: false
     };
+  },
+  watch: {
+    freet() {
+      this.viewAnyway = false;
+    }
   },
   methods: {
     deleteFreet() {
