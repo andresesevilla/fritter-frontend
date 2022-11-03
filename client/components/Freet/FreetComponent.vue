@@ -17,6 +17,17 @@
       <p class="info">
         Posted at {{ freet.dateCreated }}
       </p>
+
+      <label for="topic">Report Topic to Anxiety Shield:</label>
+      <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
+        <select name="topic" id="topic" v-model="reportedTopic">
+          <option value="mass_casualty_event">Mass Casualty Event</option>
+          <option value="disaster">Disaster</option>
+          <option value="sexual_violence">Sexual Violence</option>
+          <option value="other_anxiety">Other Anxiety</option>
+        </select>
+      </form>
+
       <p v-if="freet.restrictAccess">Private Circle: {{ freet.restrictAccess }}</p>
       <div v-if="$store.state.username === freet.author" class="actions">
         <button @click="deleteFreet">
@@ -34,7 +45,7 @@
         Anxiety Shield
       </h3>
       <p>This Freet contains the following topic(s): {{ freet.topics.join(" ") }}</p>
-      <button @click="()=>{viewAnyway = true}">View Anyway</button>
+      <button @click="() => { viewAnyway = true }">View Anyway</button>
     </div>
   </article>
 </template>
@@ -52,7 +63,8 @@ export default {
   data() {
     return {
       alerts: {}, // Displays success/error messages encountered during freet modification
-      viewAnyway: false
+      viewAnyway: false,
+      reportedTopic: ''
     };
   },
   watch: {
@@ -61,6 +73,27 @@ export default {
     }
   },
   methods: {
+    async reportToAnxietyShield() {
+      const options = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin'
+      };
+      const fields = {
+        topic: this.reportedTopic,
+      }
+      options.body = JSON.stringify(fields);
+      try {
+        const r = await fetch(`/api/freets/${this.freet._id}`, options);
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+        }
+        this.reportedTopic = '';
+      } catch (e) {
+        console.log(`Encountered the following error: ${e}`)
+      }
+    },
     deleteFreet() {
       /**
        * Deletes this freet.
