@@ -77,7 +77,6 @@ const isValidFollowLookup = async (req: Request, res: Response, next: NextFuncti
 
     // Must be valid follower
     const followerUsername = req.query.followerUsername as string;
-    console.log(`Follower username is ${followerUsername}, the whole query is: ${req.query}`)
     if (followerUsername) {
         const follower = await UserCollection.findOneByUsername(followerUsername);
         if (!follower) {

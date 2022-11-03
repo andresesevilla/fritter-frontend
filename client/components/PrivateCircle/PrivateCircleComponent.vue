@@ -30,36 +30,21 @@ export default {
     // Data from the stored private circle
     privatecircle: {
       type: Object,
+      required: true,
+    },
+    followers: {
+      type: Array,
       required: true
     }
   },
   async mounted() {
-    await this.getFollowers();
   },
   data() {
     return {
       username: '',
-      followers: []
     };
   },
   methods: {
-    async getFollowers() {
-      const username = this.$store.state.username;
-      const query = 'followee';
-      const desired = 'follower';
-      const url = `/api/follows?${query}Username=${username}`;
-      try {
-        const r = await fetch(url);
-        const res = await r.json();
-        if (!r.ok) {
-          throw new Error(res.error);
-        }
-        this.isValidUsername = true;
-        this.followers = res.map((value) => { return value[desired] });
-      } catch (e) {
-        this.isValidUsername = false;
-      }
-    },
     async deletePrivateCircle() {
       const options = {
         method: 'DELETE', headers: { 'Content-Type': 'application/json' }
