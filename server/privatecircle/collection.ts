@@ -76,10 +76,9 @@ class PrivateCircleCollection {
     const privateCircle = await PrivateCircleModel.findOne({ ownerId: user._id, name: name })
     const members = privateCircle.members;
     const userToToggle = await UserCollection.findOneByUsername(username);
-    const usernameStandardized = userToToggle.username;
 
     if (members.includes(userToToggle.id)) {
-      members.splice(members.indexOf(userToToggle.id))
+      members.splice(members.indexOf(userToToggle.id), 1)
     } else {
       members.push(userToToggle.id)
     }
@@ -97,12 +96,11 @@ class PrivateCircleCollection {
    */
   static async removeUserFromAnothersPrivateCircles(userIdToRemove: Types.ObjectId | string, userIdPrivateCirclesOwner: Types.ObjectId | string): Promise<void> {
     const userToRemove = await UserCollection.findOneByUserId(userIdToRemove);
-    const userToRemoveUsername = userToRemove.username;
     const privateCircles = await PrivateCircleModel.find({ ownerId: userIdPrivateCirclesOwner });
     for (const privateCircle of privateCircles) {
       const members = privateCircle.members;
       if (members.includes(userToRemove.id)) {
-        members.splice(members.indexOf(userToRemove.id))
+        members.splice(members.indexOf(userToRemove.id), 1)
       }
       await privateCircle.save();
     }

@@ -9,16 +9,23 @@
       </header>
       <ChangePasswordForm />
     </section>
+    <section>
+      <header>
+        <h2>Anxiety Shield</h2>
+      </header>
+      <AnxietyShieldComponent />
+    </section>
   </main>
 </template>
 
 <script>
 import ChangePasswordForm from '@/components/Settings/ChangePasswordForm.vue';
+import AnxietyShieldComponent from '@/components/AnxietyShield/AnixetyShieldComponent.vue'
 
 export default {
   name: 'AccountPage',
   components: {
-    ChangePasswordForm
+    ChangePasswordForm, AnxietyShieldComponent
   }
 };
 </script>

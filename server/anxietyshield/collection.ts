@@ -43,7 +43,7 @@ class AnxietyShieldCollection {
         const anxietyShield = await AnxietyShieldModel.findOne({ ownerId: user._id })
         const topics = anxietyShield.shieldedTopics;
         if (topics.includes(topic)) {
-            topics.splice(topics.indexOf(topic))
+            topics.splice(topics.indexOf(topic), 1)
         } else {
             topics.push(topic)
         }
