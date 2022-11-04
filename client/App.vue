@@ -1,18 +1,16 @@
 <template>
   <div id="app">
     <TopBar />
-    <NavBar v-if="$store.state.username" />
-    <router-view :style="{ 'margin-left': `${$store.state.username ? 100 : 0}px` }" />
+    <router-view/>
   </div>
 </template>
 
 <script>
 import TopBar from '@/components/common/TopBar.vue';
-import NavBar from '@/components/common/NavBar.vue';
 
 export default {
   name: 'App',
-  components: { TopBar, NavBar },
+  components: { TopBar },
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/users/session', {
@@ -30,10 +28,9 @@ export default {
 
 <style>
 :root {
-  --background-color: rgb(242, 242, 242);
-  --content-color: rgb(245, 245, 245);
-  --text-color: rgb(26, 26, 26);
-  --accent-color: rgb(29, 155, 240);
+  --background-color: #ffffff;
+  --accent-color: #4257b2;
+  --text-color: #455358;
 
   --content-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   --primary-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -45,7 +42,7 @@ export default {
 
 article,
 form {
-  background-color: var(--content-color);
+  background-color: var(--background-color);
   padding: 20px;
   position: relative;
   box-shadow: var(--content-shadow);
@@ -54,7 +51,7 @@ form {
 
 nav {
   box-shadow: var(--primary-shadow);
-  background-color: var(--content-color);
+  background-color: var(--background-color);
 }
 
 body {
@@ -67,6 +64,8 @@ body {
   font-size: 1.2em;
   font-family: Inter;
   color: var(--text-color);
+
+  /* scroll-behavior: smooth; */
 }
 
 main {

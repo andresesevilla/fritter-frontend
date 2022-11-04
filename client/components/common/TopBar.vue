@@ -1,6 +1,5 @@
 <!-- A basic navigation bar component -->
 <!-- Example of a component which is included on all pages (via App.vue) -->
-<!-- This TopBar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
   <nav>
@@ -12,6 +11,23 @@
         </h1>
       </div>
     </router-link>
+    <div v-if="$store.state.username" class="right">
+      <router-link to="/">
+        Home
+      </router-link>
+      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }">
+        Profile
+      </router-link>
+      <router-link to="/privatecircles">
+        Private Circles
+      </router-link>
+      <router-link to="/settings">
+        Settings
+      </router-link>
+      <a href="#" v-on:click="signOut">
+        Sign Out
+      </a>
+    </div>
     <section class="alerts">
       <article v-for="(status, alert, index) in $store.state.alerts" :key="index" :class="status">
         <p>{{ alert }}</p>
@@ -20,16 +36,42 @@
   </nav>
 </template>
 
+
+<script>
+export default {
+  methods: {
+    async signOut() {
+      // Make the request with the URL and options
+      const r = await fetch(
+        '/api/users/session',
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin' // Sends express-session credentials with request
+        }
+      );
+      // Update the username to be empty
+      this.$store.commit('setUsername', null);
+      // Navigate home if user is not already home
+      if (this.$router.currentRoute.name !== 'Home') {
+        this.$router.push({ name: 'Home' });
+      }
+      // Alert user that they have signed out
+      this.$store.commit('alert', {
+        message: 'You are now signed out!', status: 'success'
+      })
+    }
+  }
+};
+</script>
+
 <style scoped>
 nav {
   padding: 1vw 2vw;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   position: fixed;
-  top: 0;
   width: 100%;
-  height:65px;
   z-index: 1;
 }
 
