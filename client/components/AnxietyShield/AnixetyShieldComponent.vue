@@ -62,11 +62,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.anxietyshield {
-  padding: 20px;
-  position: relative;
-  box-shadow: var(--content-shadow);
-}
-</style>

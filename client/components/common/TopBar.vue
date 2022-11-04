@@ -5,7 +5,7 @@
   <nav>
     <router-link to="/">
       <div class="left">
-        <img src="../../public/logo.svg">
+        <img src="../../public/logo-white.svg">
         <h1 class="title">
           Fritter
         </h1>
@@ -95,7 +95,6 @@ img {
 }
 
 .right {
-  font-size: 20px;
   display: grid;
   gap: 16px;
   grid-auto-flow: column;

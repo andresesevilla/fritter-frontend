@@ -30,6 +30,7 @@ export default {
 :root {
   --background-color: #ffffff;
   --accent-color: #4257b2;
+  --secondar-accent-color: #3ccfcf;
   --text-color: #455358;
 
   --content-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
@@ -51,7 +52,9 @@ form {
 
 nav {
   box-shadow: var(--primary-shadow);
-  background-color: var(--background-color);
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  font-size: 16px;
 }
 
 body {
@@ -61,16 +64,16 @@ body {
   display: flex;
   padding: 0;
   margin: 0;
+
   font-size: 1.2em;
   font-family: Inter;
   color: var(--text-color);
-
-  /* scroll-behavior: smooth; */
 }
 
 main {
+  max-width: 1000px;
   padding: 0 5em 5em;
-  margin-top: 65px;
+  margin: 100px auto !important; 
 }
 
 .alerts {

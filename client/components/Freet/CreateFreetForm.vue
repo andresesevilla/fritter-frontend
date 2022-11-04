@@ -102,9 +102,4 @@ form>* {
 form h3 {
   margin-top: 0;
 }
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-}
 </style>
