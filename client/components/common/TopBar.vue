@@ -67,7 +67,7 @@ export default {
 
 <style scoped>
 nav {
-  padding: 1vw 2vw;
+  padding: 20px 2vw;
   display: flex;
   justify-content: space-between;
   position: fixed;

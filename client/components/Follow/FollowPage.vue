@@ -12,8 +12,8 @@
             </router-link>
           </h2>
         </header>
-        <article v-if="follows.length">
-          <router-link v-for="follow in follows" :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
+        <article v-if="follows.length" v-for="follow in follows">
+          <router-link :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
           </router-link>
         </article>
         <article v-else>
