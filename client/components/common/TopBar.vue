@@ -31,6 +31,7 @@ nav {
   top: 0;
   width: 100%;
   height:65px;
+  z-index: 1;
 
   box-shadow: var(--primary-shadow)
 }

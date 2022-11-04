@@ -57,7 +57,7 @@ nav {
   width: 160px;
   position: fixed;
   top: 65px;
-  z-index: 1;
+  z-index: 2;
   background-color: var(--content-color);
   overflow-x: hidden;
   clip-path: inset(0px -6px 0px 0px);
