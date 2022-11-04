@@ -28,8 +28,9 @@ export default {
 
 <style>
 :root {
-  --background-color: #ffffff;
-  --accent-color: #4257b2;
+  --background-color: rgb(247, 247, 247);
+  --content-color: rgb(253, 253, 253);
+  --accent-color: #4b5eb4;
   --secondary-accent-color: #3ccfcf;
   --text-color: #455358;
 
@@ -43,11 +44,12 @@ export default {
 
 article,
 form {
-  background-color: var(--background-color);
+  background-color: var(--content-color);
   padding: 20px;
   position: relative;
   box-shadow: var(--content-shadow);
   margin: 20px 0 20px;
+  border-radius: 8px;
 }
 
 nav {
@@ -72,8 +74,8 @@ body {
 
 main {
   max-width: 1000px;
-  padding: 0 5em 5em;
-  margin: 110px auto !important; 
+  padding: 0 5em 1em 5em;
+  margin: 110px auto 0px auto !important; 
 }
 
 .alerts {

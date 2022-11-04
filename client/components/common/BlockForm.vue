@@ -105,7 +105,6 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 14px;
   position: relative;
   box-shadow: var(--content-shadow)
 }
