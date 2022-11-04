@@ -23,7 +23,6 @@
 <style scoped>
 nav {
   padding: 1vw 2vw;
-  background-color: var(--content-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,8 +31,6 @@ nav {
   width: 100%;
   height:65px;
   z-index: 1;
-
-  box-shadow: var(--primary-shadow)
 }
 
 .title {

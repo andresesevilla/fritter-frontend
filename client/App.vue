@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <header>
-      <TopBar />
-      <NavBar v-if="$store.state.username" />
-    </header>
+    <TopBar />
+    <NavBar v-if="$store.state.username" />
     <router-view :style="{ 'margin-left': `${$store.state.username ? 100 : 0}px` }" />
   </div>
 </template>
@@ -34,7 +32,7 @@ export default {
 :root {
   --background-color: rgb(242, 242, 242);
   --content-color: rgb(245, 245, 245);
-  --text-color: rgb(26,26,26);
+  --text-color: rgb(26, 26, 26);
   --accent-color: rgb(29, 155, 240);
 
   --content-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
@@ -43,6 +41,20 @@ export default {
 
 * {
   box-sizing: border-box;
+}
+
+article,
+form {
+  background-color: var(--content-color);
+  padding: 20px;
+  position: relative;
+  box-shadow: var(--content-shadow);
+  margin: 20px 0 20px;
+}
+
+nav {
+  box-shadow: var(--primary-shadow);
+  background-color: var(--content-color);
 }
 
 body {

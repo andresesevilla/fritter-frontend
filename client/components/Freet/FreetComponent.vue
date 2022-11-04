@@ -142,10 +142,4 @@ export default {
 </script>
 
 <style scoped>
-.freet {
-  background-color: var(--content-color);
-  padding: 20px;
-  position: relative;
-  box-shadow: var(--content-shadow);
-}
 </style>

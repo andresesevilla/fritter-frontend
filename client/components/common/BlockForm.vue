@@ -4,7 +4,7 @@
 <template>
   <form @submit.prevent="submit">
     <h3>{{ title }}</h3>
-    <article v-if="fields.length">
+    <section v-if="fields.length">
       <div v-for="field in fields" :key="field.id">
         <label :for="field.id">{{ field.label }}:</label>
         <textarea v-if="field.id === 'content'" :name="field.id" :value="field.value"
@@ -12,17 +12,17 @@
         <input v-else :type="field.id === 'password' ? 'password' : 'text'" :name="field.id" :value="field.value"
           @input="field.value = $event.target.value">
       </div>
-    </article>
-    <article v-else>
+    </section>
+    <section v-else>
       <p>{{ content }}</p>
-    </article>
+    </section>
     <button type="submit">
       {{ title }}
     </button>
     <section class="alerts">
-      <article v-for="(status, alert, index) in alerts" :key="index" :class="status">
+      <section v-for="(status, alert, index) in alerts" :key="index" :class="status">
         <p>{{ alert }}</p>
-      </article>
+      </section>
     </section>
   </form>
 </template>
@@ -110,12 +110,12 @@ form {
   box-shadow: var(--content-shadow)
 }
 
-article>div {
+section>div {
   display: flex;
   flex-direction: column;
 }
 
-form>article p {
+form>section p {
   margin: 0;
 }
 

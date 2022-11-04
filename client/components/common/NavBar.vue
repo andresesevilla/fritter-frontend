@@ -58,10 +58,8 @@ nav {
   position: fixed;
   top: 65px;
   z-index: 2;
-  background-color: var(--content-color);
   overflow-x: hidden;
   clip-path: inset(0px -6px 0px 0px);
-  box-shadow: var(--primary-shadow)
 }
 
 nav a {

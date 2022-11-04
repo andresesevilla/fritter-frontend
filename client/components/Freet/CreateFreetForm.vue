@@ -3,7 +3,7 @@
 <template>
   <form @submit.prevent="submit">
     <h3>Create a freet</h3>
-    <article>
+    <section>
       <div>
         <label for="content">Content:</label>
         <textarea name="content" v-model="content" id="content"></textarea>
@@ -15,7 +15,7 @@
         </select>
         <input v-else value="(You do not have any Private Circles)" readonly/>
       </div>
-    </article>
+    </section>
     <button type="submit">
       Create a freet
     </button>
@@ -81,21 +81,16 @@ export default {
 
 <style scoped>
 form {
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  position: relative;
-  box-shadow: var(--content-shadow)
-}
-
-article>div {
   display: flex;
   flex-direction: column;
 }
 
-form>article p {
+section>div {
+  display: flex;
+  flex-direction: column;
+}
+
+form>section p {
   margin: 0;
 }
 

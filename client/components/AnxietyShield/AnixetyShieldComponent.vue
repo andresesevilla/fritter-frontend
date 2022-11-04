@@ -1,14 +1,18 @@
 <!-- Component for displaying user's Anxiety Shield -->
 
 <template>
-  <article class="anxietyshield">
-    <h3>Your Anxiety Inducing Topics</h3>
-    <ul>
-      <li v-for="topic in $store.state.shieldedTopics">{{ topic }}</li>
-    </ul>
-    <h3>Toggle Shielding of a Topic</h3>
-    <label for="topic">Topic:</label>
+  <div>
+    <article class="anxietyshield">
+      <section>
+        <h3>Your Anxiety Inducing Topics</h3>
+        <ul>
+          <li v-for="topic in $store.state.shieldedTopics">{{ topic }}</li>
+        </ul>
+      </section>
+    </article>
     <form @submit.prevent="submit" v-on:change="editAnxietyShield">
+      <h3>Toggle Shielding of a Topic</h3>
+      <label for="topic">Topic:</label>
       <select name="topic" id="topic" v-model="toggledTopic">
         <option value="mass_casualty_event">Mass Casualty Event</option>
         <option value="disaster">Disaster</option>
@@ -16,8 +20,7 @@
         <option value="other_anxiety">Other Anxiety</option>
       </select>
     </form>
-
-  </article>
+  </div>
 </template>
 
 <script>

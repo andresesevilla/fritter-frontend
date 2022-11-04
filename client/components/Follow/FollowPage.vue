@@ -12,10 +12,10 @@
             </router-link>
           </h2>
         </header>
-        <section v-if="follows.length">
+        <article v-if="follows.length">
           <router-link v-for="follow in follows" :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
           </router-link>
-        </section>
+        </article>
         <article v-else>
           <h3>No {{ $route.name.toLowerCase() }} found.</h3>
         </article>
