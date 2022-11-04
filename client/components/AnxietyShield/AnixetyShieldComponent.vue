@@ -62,8 +62,8 @@ export default {
 
 <style scoped>
 .anxietyshield {
-  border: 1px solid #111;
   padding: 20px;
   position: relative;
+  box-shadow: var(--content-shadow);
 }
 </style>

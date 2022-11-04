@@ -23,7 +23,7 @@
 <style scoped>
 nav {
   padding: 1vw 2vw;
-  background-color: #ccc;
+  background-color: var(--content-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,11 +31,18 @@ nav {
   top: 0;
   width: 100%;
   height:65px;
+
+  box-shadow: var(--primary-shadow)
 }
 
 .title {
   font-size: 32px;
   margin: 0 5px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 img {

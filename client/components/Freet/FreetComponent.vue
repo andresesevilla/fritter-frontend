@@ -143,8 +143,9 @@ export default {
 
 <style scoped>
 .freet {
-  border: 1px solid #111;
+  background-color: var(--content-color);
   padding: 20px;
   position: relative;
+  box-shadow: var(--content-shadow);
 }
 </style>
