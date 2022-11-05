@@ -11,9 +11,9 @@
             @{{ freet.author }}
           </router-link>
         </h3>
-        <p class="info">
+        <div class="info">
           {{ freet.dateCreated }}
-        </p>
+        </div>
       </header>
       <p class="content">
         {{ freet.content }}
@@ -30,11 +30,13 @@
       </div>
     </div>
     <div v-else-if="!reporting">
-      <h3 class="anxiety-header">
+      <h3>
         Anxiety Shield
       </h3>
-      <p class="content">This freet by <span class="emphasis">@{{ freet.author }}</span> may contain the following
-        topic(s):</p>
+      <p class="content">This freet by <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
+          @{{ freet.author }}</router-link> may contain the following
+        topic(s):
+      </p>
       <ul>
         <li v-for="topic in freet.topics" v-if="$store.state.shieldedTopics.includes(topic)">
           {{ topic }}
@@ -44,7 +46,7 @@
           class="material-symbols-outlined">Visibility</span>View</button>
     </div>
     <div v-else>
-      <h3 class="anxiety-header">
+      <h3>
         Anxiety Shield
       </h3>
       <p class="info">Help users avoid anxiety inducing content by reporting it to Anxiety Shield.</p>
@@ -60,8 +62,7 @@
           <option>Other Anxiety</option>
         </select>
       </form>
-      <button @click="() => { reporting = false }"><span
-          class="material-symbols-outlined">Cancel</span>Cancel</button>
+      <button @click="() => { reporting = false }"><span class="material-symbols-outlined">Cancel</span>Cancel</button>
     </div>
   </article>
 </template>
@@ -112,7 +113,6 @@ export default {
         this.$store.commit('alert', {
           message: 'Successfully reported freet to Anxiety Shield!', status: 'success'
         });
-        this.$store.commit('refreshFreets');
         this.reporting = false;
       } catch (e) {
         this.$store.commit('alert', {
@@ -173,29 +173,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -20px
-}
-
-h3 {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-}
-
-.anxiety-header {
-  margin-bottom: -15px;
-}
-
-.content {
-  padding: 10px 0;
 }
 
 ul {
-  margin-top: -20px;
+  margin-top: -10px;
 }
 
-.info {
-  margin-bottom: 0;
+.content {
+  margin: 20px 0 20px 0;
 }
 
 form {

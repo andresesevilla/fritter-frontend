@@ -46,10 +46,6 @@ h3 {
   margin: 0;
 }
 
-.emphasis {
-  font-weight: bold;
-}
-
 .info {
   color: var(--secondary-text-color);
 }
