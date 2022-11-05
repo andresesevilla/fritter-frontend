@@ -4,7 +4,7 @@
 <template>
   <article>
     <div
-      v-if="!reporting && (!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway)">
+      v-if="!reporting && (!$store.state.shieldedTopics.some((e) => { return freet.topics.includes(e) }) || viewAnyway)">
       <header>
         <h3>
           <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div v-else-if="!reporting">
-      <h3>
+      <h3 class="anxiety-header">
         Anxiety Shield
       </h3>
       <p class="content">This freet by <span class="emphasis">@{{ freet.author }}</span> may contain the following
@@ -43,18 +43,26 @@
       <button @click="() => { viewAnyway = true }"><span
           class="material-symbols-outlined">Visibility</span>View</button>
     </div>
-    <form @submit.prevent="submit" v-on:change="reportToAnxietyShield" v-else>
-      <label for="topic">Report Topic to Anxiety Shield:</label>
-      <select name="topic" id="topic" v-model="reportedTopic">
-        <option>Death</option>
-        <option>Suicide</option>
-        <option>Serious Injury or Disease</option>
-        <option>Addiction</option>
-        <option>Sexual Violence</option>
-        <option>Financial Issues</option>
-        <option>Other Anxiety</option>
-      </select>
-    </form>
+    <div v-else>
+      <h3 class="anxiety-header">
+        Anxiety Shield
+      </h3>
+      <p class="info">Help users avoid anxiety inducing content by reporting it to Anxiety Shield.</p>
+      <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
+        <p>What anxiety inducing topic does this freet contain?</p>
+        <select name="topic" id="topic" v-model="reportedTopic">
+          <option>Death</option>
+          <option>Suicide</option>
+          <option>Serious Injury or Disease</option>
+          <option>Addiction</option>
+          <option>Sexual Violence</option>
+          <option>Financial Issues</option>
+          <option>Other Anxiety</option>
+        </select>
+      </form>
+      <button @click="() => { reporting = false }"><span
+          class="material-symbols-outlined">Cancel</span>Cancel</button>
+    </div>
   </article>
 </template>
 
@@ -72,7 +80,7 @@ export default {
     return {
       viewAnyway: false,
       reporting: false,
-      reportedTopic: ''
+      reportedTopic: '',
     };
   },
   watch: {
@@ -104,6 +112,7 @@ export default {
         this.$store.commit('alert', {
           message: 'Successfully reported freet to Anxiety Shield!', status: 'success'
         });
+        this.$store.commit('refreshFreets');
         this.reporting = false;
       } catch (e) {
         this.$store.commit('alert', {
@@ -173,11 +182,33 @@ h3 {
   grid-gap: 10px;
 }
 
+.anxiety-header {
+  margin-bottom: -15px;
+}
+
 .content {
   padding: 10px 0;
 }
 
 ul {
   margin-top: -20px;
+}
+
+.info {
+  margin-bottom: 0;
+}
+
+form {
+  background-color: inherit;
+  position: inherit;
+  box-shadow: inherit;
+  margin: 0;
+  border-radius: inherit;
+  padding: 0;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  box-shadow: none;
 }
 </style>
