@@ -12,19 +12,19 @@
       </div>
     </router-link>
     <div v-if="$store.state.username" class="right">
-      <router-link to="/">
+      <router-link to="/" class="nav">
         Home
       </router-link>
-      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }">
+      <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }" class="nav">
         Profile
       </router-link>
-      <router-link to="/privatecircles">
+      <router-link to="/privatecircles" class="nav">
         Private Circles
       </router-link>
-      <router-link to="/settings">
+      <router-link to="/settings" class="nav">
         Settings
       </router-link>
-      <a href="#" v-on:click="signOut">
+      <a href="#" v-on:click="signOut" class="nav">
         Sign Out
       </a>
     </div>
@@ -83,6 +83,23 @@ nav {
 a {
   color: inherit;
   text-decoration: none;
+  position: relative;
+}
+
+.nav:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleY(0);
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--background-color);
+  transition: transform 0.25s;
+}
+
+.nav:hover:after {
+  transform: scaleY(1);
 }
 
 img {
