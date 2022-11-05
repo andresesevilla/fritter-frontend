@@ -8,19 +8,20 @@
           <h2>Profile: @{{ $route.params.username }}</h2>
         </header>
         <section class="button-row">
+          <button @click="submit" v-if="$route.params.username != $store.state.username">{{following ? 'Unfollow' : 'Follow'}}</button>
           <router-link :to="{ name: 'Following', params: { username: $route.params.username } }"><button>View Following</button>
           </router-link>
           <router-link :to="{ name: 'Followers', params: { username: $route.params.username } }"><button>View Followers</button>
           </router-link>
         </section>
-        <section v-if="follower">
-          <p>Follows you</p>
+        <section v-if="follower && following">
+          <p>You follow each other.</p>
         </section>
-        <section v-if="$route.params.username != $store.state.username">
-          <form @submit.prevent="submit" v-on:change="submit">
-            <label for="followingUser">Following </label>
-            <input v-model="following" type="checkbox" id="followingUser">
-          </form>
+        <section v-if="follower && !following">
+          <p>@{{ $route.params.username }} follows you, but you do not follow them back.</p>
+        </section>
+        <section v-if="!follower && following">
+          <p>You are following @{{ $route.params.username }}, but they do not follow you back.</p>
         </section>
         <section v-if="$store.state.freets.length">
           <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
@@ -58,6 +59,8 @@ export default {
   },
   watch: {
     async '$route'() {
+      this.follower = false;
+      this.following = false;
       const getFreets = this.getFreets();
       const getFollower = this.getFollower();
       const getFollowing = this.getFollowing();
@@ -68,7 +71,7 @@ export default {
   },
   methods: {
     async submit() {
-      if (this.following) {
+      if (!this.following) {
         const url = 'api/follows'
         const fields = { username: this.$route.params.username }
         const options = {
@@ -87,6 +90,7 @@ export default {
           this.$store.commit('alert', {
             message: `Successfully followed user!`, status: 'success'
           });
+          this.following = true;
         } catch (e) {
           this.$store.commit('alert', {
             message: e, status: 'error'
@@ -112,6 +116,7 @@ export default {
           this.$store.commit('alert', {
             message: `Successfully unfollowed user!`, status: 'success'
           });
+          this.following = false;
         } catch (e) {
           this.$store.commit('alert', {
             message: e, status: 'error'
