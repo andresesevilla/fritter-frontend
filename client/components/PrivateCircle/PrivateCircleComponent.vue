@@ -5,17 +5,16 @@
   <article class="privatecircle">
     <h3>{{ privatecircle.name }}</h3>
     <section>
-      <router-link v-for="member in privatecircle.members" :to="{ name: 'Profile', params: { username: member.username } }">
+      <router-link v-for="member in privatecircle.members"
+        :to="{ name: 'Profile', params: { username: member.username } }">
         @{{ member.username }}</router-link>
     </section>
     <form @submit.prevent="submit" v-on:change="editPrivateCircle">
-      <div v-if="$store.state.privatecircles.length">
-        <label for="username">Toggle a user's membership:</label>
-        <select name="username" v-model="username" id="username">
-          <option v-for="username in followers">{{ username }}</option>
-        </select>
-      </div>
-      <div v-else>(You do not have any Private Circles, so options are hidden)</div>
+      <label for="username">Toggle a user's membership:</label>
+      <select name="username" v-model="username" id="username">
+        <option value="" selected disabled hidden>Select a follower</option>
+        <option v-for="username in followers" :value="username">@{{ username }}</option>
+      </select>
     </form>
     <button @click="deletePrivateCircle">
       <span class="material-symbols-outlined">Delete</span> Delete
@@ -54,13 +53,13 @@ export default {
         if (!r.ok) {
           const res = await r.json();
           this.$store.commit('alert', {
-          message: e, status: 'error'
-        });
+            message: e, status: 'error'
+          });
         }
         this.$store.commit('refreshPrivateCircles');
         this.$store.commit('alert', {
-            message: `Successfully deleted Private Circle!`, status: 'success'
-          });
+          message: `Successfully deleted Private Circle!`, status: 'success'
+        });
       } catch (e) {
         this.$store.commit('alert', {
           message: e, status: 'error'
@@ -87,8 +86,8 @@ export default {
         this.$store.commit('refreshPrivateCircles');
         this.username = '';
         this.$store.commit('alert', {
-            message: `Successfully edited Private Circle!`, status: 'success'
-          });
+          message: `Successfully edited Private Circle!`, status: 'success'
+        });
 
       } catch (e) {
         this.$store.commit('alert', {
