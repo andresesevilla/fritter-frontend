@@ -99,6 +99,7 @@ export default {
 <style scoped>
 button {
   padding: 5px 25px;
+  height:100%;
 }
 
 form {

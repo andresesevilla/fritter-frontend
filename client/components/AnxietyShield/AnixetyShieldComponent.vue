@@ -14,10 +14,13 @@
       <h3>Toggle Shielding of a Topic</h3>
       <label for="topic">Topic:</label>
       <select name="topic" id="topic" v-model="toggledTopic">
-        <option value="mass_casualty_event">Mass Casualty Event</option>
-        <option value="disaster">Disaster</option>
-        <option value="sexual_violence">Sexual Violence</option>
-        <option value="other_anxiety">Other Anxiety</option>
+        <option>Death</option>
+        <option>Suicide</option>
+        <option>Serious Injury or Disease</option>
+        <option>Addiction</option>
+        <option>Sexual Violence</option>
+        <option>Financial Issues</option>
+        <option>Other Anxiety</option>
       </select>
     </form>
   </div>

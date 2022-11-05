@@ -3,7 +3,8 @@
 
 <template>
   <article>
-    <div v-if="!reporting && (!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway)">
+    <div
+      v-if="!reporting && (!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway)">
       <header>
         <h3>
           <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
@@ -32,21 +33,28 @@
       <h3>
         Anxiety Shield
       </h3>
-      <p class="content">This freet by <span class="emphasis">@{{ freet.author }}</span> may contain the following topic(s): {{
-          freet.topics.join(" ")
-      }}</p>
+      <p class="content">This freet by <span class="emphasis">@{{ freet.author }}</span> may contain the following
+        topic(s):</p>
+      <ul>
+        <li v-for="topic in freet.topics" v-if="$store.state.shieldedTopics.includes(topic)">
+          {{ topic }}
+        </li>
+      </ul>
       <button @click="() => { viewAnyway = true }"><span
           class="material-symbols-outlined">Visibility</span>View</button>
     </div>
     <form @submit.prevent="submit" v-on:change="reportToAnxietyShield" v-else>
-        <label for="topic">Report Topic to Anxiety Shield:</label>
-        <select name="topic" id="topic" v-model="reportedTopic">
-          <option value="mass_casualty_event">Mass Casualty Event</option>
-          <option value="disaster">Disaster</option>
-          <option value="sexual_violence">Sexual Violence</option>
-          <option value="other_anxiety">Other Anxiety</option>
-        </select>
-      </form>
+      <label for="topic">Report Topic to Anxiety Shield:</label>
+      <select name="topic" id="topic" v-model="reportedTopic">
+        <option>Death</option>
+        <option>Suicide</option>
+        <option>Serious Injury or Disease</option>
+        <option>Addiction</option>
+        <option>Sexual Violence</option>
+        <option>Financial Issues</option>
+        <option>Other Anxiety</option>
+      </select>
+    </form>
   </article>
 </template>
 
@@ -167,5 +175,9 @@ h3 {
 
 .content {
   padding: 10px 0;
+}
+
+ul {
+  margin-top: -20px;
 }
 </style>

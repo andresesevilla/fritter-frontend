@@ -63,10 +63,13 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
 const isValidAnxietyReport = async (req: Request, res: Response, next: NextFunction) => {
   const topic = req.body.topic;
   const valid_report_reasons = [
-    'mass_casualty_event',
-    'disaster',
-    'sexual_violence',
-    'other_anxiety'
+    'Death',
+    'Suicide',
+    'Serious Injury or Disease',
+    'Addiction',
+    'Sexual Violence',
+    'Financial Issues',
+    'Other Anxiety',
   ]
   if (!valid_report_reasons.includes(topic)) {
     res.status(400).json({
