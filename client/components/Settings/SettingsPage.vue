@@ -12,6 +12,7 @@
     <section>
       <header>
         <h2>Anxiety Shield</h2>
+        <p class="info">Displays a warning message over freets that contain your anxiety inducing topics. Any user can report anxiety inducing topics in a freet by clicking "Report Anxiety."</p>
       </header>
       <AnxietyShieldComponent />
     </section>

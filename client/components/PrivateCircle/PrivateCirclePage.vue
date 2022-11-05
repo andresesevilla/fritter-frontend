@@ -3,6 +3,7 @@
 <template>
   <main>
     <h2>Private Circles</h2>
+    <p class="info">Allow you to post freets viewable only by people in one of your Private Circles.</p>
     <CreatePrivateCircleForm />
     <section v-if="$store.state.privatecircles.length">
       <PrivateCircleComponent v-for="privatecircle in $store.state.privatecircles" :key="privatecircle.id" :privatecircle="privatecircle" :followers="followers" />
