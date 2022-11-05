@@ -73,6 +73,16 @@ export default {
       );
       // Update the username to be empty
       this.$store.commit('setUsername', null);
+
+      // Avoid persisting state across sessions
+      this.$store.state.showAllFreets = false;
+      this.$store.state.filter = null;
+      this.$store.state.freets = [];
+      this.$store.state.shieldedTopics = [];
+      this.$store.state.alerts = [];
+      this.$store.state.username = null;
+      this.$store.state.privateCircles = [];
+
       // Navigate home if user is not already home
       if (this.$router.currentRoute.name !== 'Home') {
         this.$router.push({ name: 'Home' });

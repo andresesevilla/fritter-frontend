@@ -8,39 +8,13 @@
       </header>
       <CreateFreetForm />
       <header>
-        <div class="left">
-          <h2>
-            Viewing
-            <span v-if="$store.state.showAllFreets">
-              all freets
-            </span>
-            <span v-else>
-              feed
-            </span>
-          </h2>
-        </div>
-        <div class="right">
-          <GetFreetsForm />
-        </div>
+        <GetFreetsForm />
       </header>
       <section v-if="$store.state.freets.length">
         <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
       </section>
       <article v-else>
         <h3>No freets found.</h3>
-      </article>
-    </section>
-    <section v-else>
-      <header>
-        <h2>Welcome to Fritter!</h2>
-      </header>
-      <article>
-        <h3>
-          <router-link to="/login">
-            Sign in
-          </router-link>
-          to view, create, and delete freets.
-        </h3>
       </article>
     </section>
   </main>

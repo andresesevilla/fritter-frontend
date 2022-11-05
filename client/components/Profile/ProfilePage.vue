@@ -122,6 +122,9 @@ export default {
     async getFollowing() {
       const profileUsername = this.$route.params.username;
       const loggedInUsername = this.$store.state.username;
+      if (profileUsername === loggedInUsername) {
+        return;
+      }
       const url = `/api/follows?followerUsername=${loggedInUsername}&followeeUsername=${profileUsername}`;
       const r = await fetch(url);
       if (r.status !== 204) {
@@ -131,6 +134,9 @@ export default {
     async getFollower() {
       const profileUsername = this.$route.params.username;
       const loggedInUsername = this.$store.state.username;
+      if (profileUsername === loggedInUsername) {
+        return;
+      }
       const url = `/api/follows?followerUsername=${profileUsername}&followeeUsername=${loggedInUsername}`;
       const r = await fetch(url);
       if (r.status !== 204) {

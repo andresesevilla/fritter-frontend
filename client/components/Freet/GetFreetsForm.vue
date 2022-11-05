@@ -1,9 +1,22 @@
 <!-- Form for getting freets (all, from user) -->
 <template>
-  <form @submit.prevent="submit" v-on:change="submit">
-    <label for="showAllFreets">Show All Freets</label>
-    <input v-model="value" type="checkbox" id="showAllFreets">
-  </form>
+  <div>
+    <div class="feed-control">
+      <h2>
+        Viewing
+        <span v-if="$store.state.showAllFreets">
+          global feed
+        </span>
+        <span v-else>
+          your feed
+        </span>
+      </h2>
+      <button @click="click">
+        Switch to {{ $store.state.showAllFreets ? 'your' : 'global' }} feed <span class="material-symbols-outlined">{{$store.state.showAllFreets ? 'Home' : 'Public'}}</span>
+      </button>
+    </div>
+    <p class="info">Your feed has freets from users you follow. Global feed contains freets from all users.</p>
+  </div>
 </template>
 
 
@@ -12,13 +25,19 @@
 export default {
   name: 'GetFreetsForm',
   data() {
-    return { value: this.$store.state.showAllFreets };
+    return {
+      value: this.$store.state.showAllFreets
+    };
   },
   mounted() {
     this.submit();
     this.$store.commit('refreshShieldedTopics');
   },
   methods: {
+    async click() {
+      this.value = !this.value;
+      await this.submit();
+    },
     async submit() {
       this.$store.commit('setShowAllFreets', this.value);
       const url = this.value ? '/api/freets' : '/api/freets?feed';
@@ -39,3 +58,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.feed-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -10px;
+}
+</style>
