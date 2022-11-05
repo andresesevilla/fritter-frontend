@@ -62,10 +62,13 @@ textarea {
   padding: 5px 5px;
   border: 1px solid var(--text-color);
   resize: none;
+  font-size: 1.2em;
+  font-family: Inter;
+  height: 100px;
 }
 
-textarea::placeholder {
-  font-family: Inter;
+select {
+  font-size: 1em;
 }
 
 input {
@@ -92,6 +95,12 @@ button {
 
 button:hover {
   box-shadow: var(--primary-shadow);
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 article,

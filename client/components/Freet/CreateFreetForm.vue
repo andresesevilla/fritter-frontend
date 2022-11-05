@@ -4,14 +4,16 @@
   <form @submit.prevent="submit">
     <section>
       <div>
-        <textarea name="content" v-model="content" id="content" placeholder="What's happening?"></textarea>
+        <textarea name="content" v-model="content" id="content" placeholder="What's happening?" maxlength="140"></textarea>
       </div>
+      <p class="info">{{content.length}}/140 characters</p>
       <div>
-        <label for="privatecircle">Private Circle (Optional):</label>
-        <select v-if="$store.state.privatecircles.length" name="privatecircle" v-model="privatecircle" id="privatecircle">
-          <option v-for="privatecircle in $store.state.privatecircles">{{privatecircle.name}}</option>
+        <!-- <label for="privatecircle">Private Circle (Optional):</label> -->
+        <select name="privatecircle" v-model="privatecircle" id="privatecircle" v-if="$store.state.privatecircles.length">
+          <option value="" selected>Post publicly</option>
+          <option v-for="privatecircle in $store.state.privatecircles" :value=privatecircle.name>Post to {{privatecircle.name}}</option>
         </select>
-        <input v-else placeholder="You do not have any Private Circles" readonly/>
+        <p v-else class="info">Want to post to a smaller audience? Create a <router-link to="privatecircles">Private Circle</router-link>.</p>
       </div>
     </section>
     <button type="submit">

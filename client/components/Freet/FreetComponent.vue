@@ -19,7 +19,7 @@
       </p>
 
       <p v-if="freet.restrictAccess" class="info">Private Circle: {{ freet.restrictAccess }}</p>
-      <div class="actions">
+      <div class="button-row">
         <button @click="deleteFreet" v-if="$store.state.username === freet.author">
           <span class="material-symbols-outlined">Delete</span> Delete
         </button>
@@ -167,11 +167,5 @@ h3 {
 
 .content {
   padding: 10px 0;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
 }
 </style>

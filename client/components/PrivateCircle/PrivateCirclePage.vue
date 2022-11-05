@@ -3,7 +3,7 @@
 <template>
   <main>
     <h2>Private Circles</h2>
-    <p class="info">Allow you to post freets viewable only by people in one of your Private Circles.</p>
+    <p class="info">Allow you to post freets viewable only by people in one of your Private Circles. Deleting a Private Circle will delete all freets posted to that Private Circle.</p>
     <CreatePrivateCircleForm />
     <section v-if="$store.state.privatecircles.length">
       <PrivateCircleComponent v-for="privatecircle in $store.state.privatecircles" :key="privatecircle.id" :privatecircle="privatecircle" :followers="followers" />

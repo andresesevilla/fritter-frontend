@@ -7,10 +7,10 @@
         <header>
           <h2>Profile: @{{ $route.params.username }}</h2>
         </header>
-        <section>
-          <router-link :to="{ name: 'Following', params: { username: $route.params.username } }">View Following
+        <section class="button-row">
+          <router-link :to="{ name: 'Following', params: { username: $route.params.username } }"><button>View Following</button>
           </router-link>
-          <router-link :to="{ name: 'Followers', params: { username: $route.params.username } }">View Followers
+          <router-link :to="{ name: 'Followers', params: { username: $route.params.username } }"><button>View Followers</button>
           </router-link>
         </section>
         <section v-if="follower">
