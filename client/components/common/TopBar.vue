@@ -3,14 +3,20 @@
 
 <template>
   <nav>
-    <router-link to="/">
-      <div class="left">
-        <img src="../../public/logo-white.svg">
-        <h1 class="title">
-          Fritter
-        </h1>
-      </div>
-    </router-link>
+    <div class="left">
+      <router-link to="/">
+        <header>
+          <img src="../../public/logo-white.svg">
+          <h1 class="title">
+            Fritter
+          </h1>
+        </header>
+      </router-link>
+      <form @submit.prevent="search">
+        <input type="text" placeholder="Search for a user..." v-model="usernameToSearch">
+        <button type="submit"><span class="material-symbols-outlined">search</span></button>
+      </form>
+    </div>
     <div v-if="$store.state.username" class="right">
       <router-link to="/" class="nav">
         Home
@@ -39,7 +45,22 @@
 
 <script>
 export default {
+  data() {
+    return {
+      usernameToSearch: ''
+    }
+  },
   methods: {
+    search() {
+      let username = this.usernameToSearch;
+      if (username.length > 0) {
+        if (username.startsWith('@')) {
+          username = username.slice(1);
+        }
+        this.$router.push({ name: 'Profile', params: { username: username } });
+        this.usernameToSearch = '';
+      }
+    },
     async signOut() {
       // Make the request with the URL and options
       const r = await fetch(
@@ -66,6 +87,33 @@ export default {
 </script>
 
 <style scoped>
+
+button {
+  padding: 5px 25px;
+}
+
+form {
+  background-color: inherit;
+  position: inherit;
+  box-shadow: inherit;
+  margin: 0;
+  border-radius: inherit;
+  padding: 0;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+
+  box-shadow: var(--primary-shadow);
+}
+
+input {
+  padding: none;
+  margin: none;
+  border: none;
+  height: 38px;
+}
+
 nav {
   padding: 20px 2vw;
   display: flex;
@@ -107,6 +155,13 @@ img {
 }
 
 .left {
+  display: grid;
+  gap: 25px;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+header {
   display: flex;
   align-items: center;
 }
