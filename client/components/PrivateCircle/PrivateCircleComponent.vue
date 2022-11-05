@@ -18,7 +18,7 @@
       <div v-else>(You do not have any Private Circles, so options are hidden)</div>
     </form>
     <button @click="deletePrivateCircle">
-      🗑️ Delete
+      <span class="material-symbols-outlined">Delete</span> Delete
     </button>
   </article>
 </template>

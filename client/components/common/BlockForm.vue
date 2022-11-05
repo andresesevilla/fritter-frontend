@@ -95,15 +95,6 @@ export default {
 </script>
 
 <style scoped>
-form {
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  box-shadow: var(--content-shadow)
-}
-
 section>div {
   display: flex;
   flex-direction: column;

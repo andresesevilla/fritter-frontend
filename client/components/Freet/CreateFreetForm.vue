@@ -15,7 +15,7 @@
       </div>
     </section>
     <button type="submit">
-      Create a freet
+      Post freet
     </button>
   </form>
 </template>

@@ -31,8 +31,8 @@ export default {
   --background-color: rgb(247, 247, 247);
   --content-color: rgb(253, 253, 253);
   --accent-color: #4b5eb4;
-  --secondary-accent-color: #d3dbdf;
   --text-color: #455358;
+  --secondary-text-color: #909697;
 
   --content-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   --primary-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -40,6 +40,18 @@ export default {
 
 a {
   color: var(--accent-color);
+}
+
+h3 {
+  margin: 0;
+}
+
+.emphasis {
+  font-weight: bold;
+}
+
+.info {
+  color: var(--secondary-text-color);
 }
 
 * {
@@ -68,10 +80,14 @@ button {
   color: var(--background-color);
   padding: 15px 25px;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   cursor: pointer;
   transition-duration: 0.2s;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 10px;
 }
 
 button:hover {
@@ -81,7 +97,7 @@ button:hover {
 article,
 form {
   background-color: var(--content-color);
-  padding: 20px;
+  padding: 30px;
   position: relative;
   box-shadow: var(--content-shadow);
   margin: 20px 0 20px;

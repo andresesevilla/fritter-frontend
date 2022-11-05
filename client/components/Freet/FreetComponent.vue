@@ -2,24 +2,44 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
-  <article class="freet">
-    <div v-if="!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway">
+  <article>
+    <div v-if="!reporting && (!freet.topics.some((e) => { return $store.state.shieldedTopics.includes(e) }) || viewAnyway)">
       <header>
-        <h3 class="author">
+        <h3>
           <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
             @{{ freet.author }}
           </router-link>
         </h3>
+        <p class="info">
+          {{ freet.dateCreated }}
+        </p>
       </header>
       <p class="content">
         {{ freet.content }}
       </p>
-      <p class="info">
-        Posted at {{ freet.dateCreated }}
-      </p>
 
-      <label for="topic">Report Topic to Anxiety Shield:</label>
-      <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
+      <p v-if="freet.restrictAccess" class="info">Private Circle: {{ freet.restrictAccess }}</p>
+      <div class="actions">
+        <button @click="deleteFreet" v-if="$store.state.username === freet.author">
+          <span class="material-symbols-outlined">Delete</span> Delete
+        </button>
+        <button @click="startReport">
+          <span class="material-symbols-outlined">Security</span> Report Anxiety
+        </button>
+      </div>
+    </div>
+    <div v-else-if="!reporting">
+      <h3>
+        Anxiety Shield
+      </h3>
+      <p class="content">This freet by <span class="emphasis">@{{ freet.author }}</span> may contain the following topic(s): {{
+          freet.topics.join(" ")
+      }}</p>
+      <button @click="() => { viewAnyway = true }"><span
+          class="material-symbols-outlined">Visibility</span>View</button>
+    </div>
+    <form @submit.prevent="submit" v-on:change="reportToAnxietyShield" v-else>
+        <label for="topic">Report Topic to Anxiety Shield:</label>
         <select name="topic" id="topic" v-model="reportedTopic">
           <option value="mass_casualty_event">Mass Casualty Event</option>
           <option value="disaster">Disaster</option>
@@ -27,21 +47,6 @@
           <option value="other_anxiety">Other Anxiety</option>
         </select>
       </form>
-
-      <p v-if="freet.restrictAccess">Private Circle: {{ freet.restrictAccess }}</p>
-      <div v-if="$store.state.username === freet.author" class="actions">
-        <button @click="deleteFreet">
-          🗑️ Delete
-        </button>
-      </div>
-    </div>
-    <div v-else>
-      <h3>
-        Anxiety Shield
-      </h3>
-      <p>This Freet contains the following topic(s): {{ freet.topics.join(" ") }}</p>
-      <button @click="() => { viewAnyway = true }">View Anyway</button>
-    </div>
   </article>
 </template>
 
@@ -58,6 +63,7 @@ export default {
   data() {
     return {
       viewAnyway: false,
+      reporting: false,
       reportedTopic: ''
     };
   },
@@ -67,6 +73,9 @@ export default {
     }
   },
   methods: {
+    startReport() {
+      this.reporting = true;
+    },
     async reportToAnxietyShield() {
       const options = {
         method: 'PATCH',
@@ -87,6 +96,7 @@ export default {
         this.$store.commit('alert', {
           message: 'Successfully reported freet to Anxiety Shield!', status: 'success'
         });
+        this.reporting = false;
       } catch (e) {
         this.$store.commit('alert', {
           message: e, status: 'error'
@@ -140,3 +150,28 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -20px
+}
+
+h3 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+}
+
+.content {
+  padding: 10px 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+</style>
