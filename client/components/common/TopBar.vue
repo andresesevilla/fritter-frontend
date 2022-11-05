@@ -12,7 +12,7 @@
           </h1>
         </header>
       </router-link>
-      <form @submit.prevent="search">
+      <form @submit.prevent="search" v-if="$store.state.username">
         <input type="text" placeholder="Search for a user..." v-model="usernameToSearch">
         <button type="submit"><span class="material-symbols-outlined">search</span></button>
       </form>
@@ -87,7 +87,6 @@ export default {
 </script>
 
 <style scoped>
-
 button {
   padding: 5px 25px;
 }
@@ -115,17 +114,19 @@ input {
 }
 
 nav {
-  padding: 20px 2vw;
+  padding: 0 2vw;
   display: flex;
   justify-content: space-between;
   position: fixed;
   width: 100%;
   z-index: 1;
+  min-height: 79px;
 }
 
 .title {
   font-size: 32px;
   margin: 0 5px;
+  box-shadow: none;
 }
 
 a {
@@ -134,20 +135,13 @@ a {
   position: relative;
 }
 
-.nav:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleY(0);
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: var(--background-color);
-  transition: transform 0.25s;
+.nav {
+  padding: 30px 15px;
+  transition-duration: 0.2s;
 }
 
-.nav:hover:after {
-  transform: scaleY(1);
+.nav:hover {
+  box-shadow: var(--primary-shadow);
 }
 
 img {
@@ -168,13 +162,8 @@ header {
 
 .right {
   display: grid;
-  gap: 16px;
   grid-auto-flow: column;
   align-items: center;
-}
-
-.right a {
-  margin-left: 5px;
 }
 
 .alerts {
