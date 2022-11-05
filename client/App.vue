@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TopBar />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -31,15 +31,51 @@ export default {
   --background-color: rgb(247, 247, 247);
   --content-color: rgb(253, 253, 253);
   --accent-color: #4b5eb4;
-  --secondary-accent-color: #3ccfcf;
+  --secondary-accent-color: #d3dbdf;
   --text-color: #455358;
 
   --content-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   --primary-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
+a {
+  color: var(--accent-color);
+}
+
 * {
   box-sizing: border-box;
+}
+
+textarea {
+  padding: 5px 5px;
+  border: 1px solid var(--text-color);
+  resize: none;
+}
+
+textarea::placeholder {
+  font-family: Inter;
+}
+
+input {
+  padding: 5px 5px;
+  border: 1px solid var(--text-color);
+  resize: none;
+}
+
+button {
+  background-color: var(--accent-color);
+  border: none;
+  color: var(--background-color);
+  padding: 15px 25px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+button:hover {
+  box-shadow: var(--primary-shadow);
 }
 
 article,
@@ -75,7 +111,7 @@ body {
 main {
   max-width: 1000px;
   padding: 0 5em 1em 5em;
-  margin: 110px auto 0px auto !important; 
+  margin: 110px auto 0px auto !important;
 }
 
 .alerts {

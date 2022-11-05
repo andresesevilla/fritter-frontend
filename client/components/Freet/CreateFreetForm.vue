@@ -2,18 +2,16 @@
 
 <template>
   <form @submit.prevent="submit">
-    <h3>Create a freet</h3>
     <section>
       <div>
-        <label for="content">Content:</label>
-        <textarea name="content" v-model="content" id="content"></textarea>
+        <textarea name="content" v-model="content" id="content" placeholder="What's happening?"></textarea>
       </div>
       <div>
         <label for="privatecircle">Private Circle (Optional):</label>
         <select v-if="$store.state.privatecircles.length" name="privatecircle" v-model="privatecircle" id="privatecircle">
           <option v-for="privatecircle in $store.state.privatecircles">{{privatecircle.name}}</option>
         </select>
-        <input v-else value="(You do not have any Private Circles)" readonly/>
+        <input v-else placeholder="You do not have any Private Circles" readonly/>
       </div>
     </section>
     <button type="submit">
