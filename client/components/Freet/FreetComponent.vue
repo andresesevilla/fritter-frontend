@@ -34,11 +34,6 @@
           🗑️ Delete
         </button>
       </div>
-      <section class="alerts">
-        <article v-for="(status, alert, index) in alerts" :key="index" :class="status">
-          <p>{{ alert }}</p>
-        </article>
-      </section>
     </div>
     <div v-else>
       <h3>
@@ -62,7 +57,6 @@ export default {
   },
   data() {
     return {
-      alerts: {}, // Displays success/error messages encountered during freet modification
       viewAnyway: false,
       reportedTopic: ''
     };
@@ -90,8 +84,13 @@ export default {
           throw new Error(res.error);
         }
         this.reportedTopic = '';
+        this.$store.commit('alert', {
+          message: 'Successfully reported freet to Anxiety Shield!', status: 'success'
+        });
       } catch (e) {
-        console.log(`Encountered the following error: ${e}`)
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     },
     deleteFreet() {
@@ -133,8 +132,9 @@ export default {
 
         params.callback();
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }

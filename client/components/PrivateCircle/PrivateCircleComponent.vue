@@ -53,11 +53,18 @@ export default {
         const r = await fetch(`/api/privatecircles/${this.privatecircle.name}`, options);
         if (!r.ok) {
           const res = await r.json();
-          console.log(`The following error occurred when trying to delete the private circle: ${res.error}`)
+          this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
         }
         this.$store.commit('refreshPrivateCircles');
+        this.$store.commit('alert', {
+            message: `Successfully deleted Private Circle!`, status: 'success'
+          });
       } catch (e) {
-        console.log(`The following error occurred when trying to delete the private circle: ${e}`)
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     },
     async editPrivateCircle() {
@@ -79,9 +86,14 @@ export default {
 
         this.$store.commit('refreshPrivateCircles');
         this.username = '';
+        this.$store.commit('alert', {
+            message: `Successfully edited Private Circle!`, status: 'success'
+          });
 
       } catch (e) {
-        console.log(`Encountered the following error: ${e}`)
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }

@@ -123,6 +123,6 @@ img {
 }
 
 .alerts {
-  width: 25%;
+  width: 35%;
 }
 </style>

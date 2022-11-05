@@ -3,11 +3,11 @@
 <template>
   <main>
     <section>
-      <h2>Page Not Found</h2>
-      <p>The page that you requested could not be found.</p>
+      <h2>{{$router.currentRoute.path.startsWith('/@') ? 'User' : 'Page'}} Not Found</h2>
+      <p>The requested {{$router.currentRoute.path.startsWith('/@') ? 'user' : 'page'}} does not exist.</p>
       <h3>
         <router-link to="/">
-          Return to the home page
+          Return to home page
         </router-link>
       </h3>
     </section>

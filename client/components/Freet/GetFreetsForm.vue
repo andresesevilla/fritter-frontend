@@ -1,4 +1,4 @@
-<!-- Form for getting freets (all, from user) (inline style) -->
+<!-- Form for getting freets (all, from user) -->
 <template>
   <form @submit.prevent="submit" v-on:change="submit">
     <label for="showAllFreets">Show All Freets</label>
@@ -31,8 +31,9 @@ export default {
         this.$store.commit('updateFilter', null);
         this.$store.commit('updateFreets', res);
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }

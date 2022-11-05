@@ -84,8 +84,13 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
+          this.$store.commit('alert', {
+            message: `Successfully followed user!`, status: 'success'
+          });
         } catch (e) {
-          console.log(`Encountered an issue when trying to follow: ${e}`)
+          this.$store.commit('alert', {
+            message: e, status: 'error'
+          });
         }
 
 
@@ -104,8 +109,13 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
+          this.$store.commit('alert', {
+            message: `Successfully unfollowed user!`, status: 'success'
+          });
         } catch (e) {
-          console.log(`Encountered an issue when trying to unfollow: ${e}`)
+          this.$store.commit('alert', {
+            message: e, status: 'error'
+          });
         }
       }
     },

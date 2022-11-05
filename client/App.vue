@@ -132,7 +132,7 @@ main {
 }
 
 .alerts p {
-  margin: 0;
+  margin: 10px 30px 10px 30px;
 }
 
 .alerts .error {
@@ -140,6 +140,6 @@ main {
 }
 
 .alerts .success {
-  background-color: rgb(45, 135, 87);
+  background-color: rgb(16, 134, 71);
 }
 </style>

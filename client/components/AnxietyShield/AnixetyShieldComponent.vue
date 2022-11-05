@@ -54,9 +54,14 @@ export default {
 
         this.toggledTopic = '';
         this.$store.commit('refreshShieldedTopics');
+        this.$store.commit('alert', {
+          message: 'Successfully toggled topic!', status: 'success'
+        });
 
       } catch (e) {
-        console.log(`Encountered the following error: ${e}`)
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }

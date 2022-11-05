@@ -17,11 +17,6 @@
     <button type="submit">
       Create a freet
     </button>
-    <section class="alerts">
-      <article v-for="(status, alert, index) in alerts" :key="index" :class="status">
-        <p>{{ alert }}</p>
-      </article>
-    </section>
   </form>
 </template>
 
@@ -36,7 +31,6 @@ export default {
     return {
       content: '',
       privatecircle: '',
-      alerts: {},
     };
   },
   methods: {
@@ -64,13 +58,14 @@ export default {
         this.content = '';
         this.privatecircle = '';
 
-        const message = 'Successfully created a freet!';
-        this.$set(this.alerts, message, 'success');
-        setTimeout(() => this.$delete(this.alerts, message), 3000);
+        this.$store.commit('alert', {
+          message: 'Successfully created a freet!', status: 'success'
+        });
 
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }

@@ -18,9 +18,9 @@ export default {
       ],
       title: 'Create account',
       callback: () => {
-        const message = 'Successfully created an account!';
-        this.$set(this.alerts, message, 'success');
-        setTimeout(() => this.$delete(this.alerts, message), 3000);
+        this.$store.commit('alert', {
+          message: 'Successfully created an account!', status: 'success'
+        });
       }
     };
   }

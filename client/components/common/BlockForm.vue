@@ -19,11 +19,6 @@
     <button type="submit">
       {{ title }}
     </button>
-    <section class="alerts">
-      <section v-for="(status, alert, index) in alerts" :key="index" :class="status">
-        <p>{{ alert }}</p>
-      </section>
-    </section>
   </form>
 </template>
 
@@ -41,7 +36,6 @@ export default {
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
-      alerts: {}, // Displays success/error messages encountered during form submission
       callback: null // Function to run after successful form submission
     };
   },
@@ -91,8 +85,9 @@ export default {
           this.callback();
         }
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     }
   }
