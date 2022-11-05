@@ -110,7 +110,7 @@ input {
   padding: none;
   margin: none;
   border: none;
-  height: 38px;
+  height: 45px;
 }
 
 nav {
@@ -146,6 +146,7 @@ a {
 
 img {
   height: 32px;
+  margin-left: 5px;
 }
 
 .left {
