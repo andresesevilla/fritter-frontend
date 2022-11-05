@@ -19,19 +19,19 @@
     </div>
     <div v-if="$store.state.username" class="right">
       <router-link to="/" class="nav">
-        Home
+        Home<span class="material-symbols-outlined">Home</span>
       </router-link>
       <router-link :to="{ name: 'Profile', params: { username: this.$store.state.username } }" class="nav">
-        Profile
+        Profile<span class="material-symbols-outlined">Person</span>
       </router-link>
       <router-link to="/privatecircles" class="nav">
-        Private Circles
+        Private Circles<span class="material-symbols-outlined">Workspaces</span>
       </router-link>
       <router-link to="/settings" class="nav">
-        Settings
+        Settings<span class="material-symbols-outlined">Settings</span>
       </router-link>
       <a href="#" v-on:click="signOut" class="nav">
-        Sign Out
+        Sign Out<span class="material-symbols-outlined">Logout</span>
       </a>
     </div>
     <section class="alerts">
@@ -115,13 +115,13 @@ form {
   align-items: center;
 
   box-shadow: var(--primary-shadow);
+  margin-left: 20px;
 }
 
 input {
-  padding: none;
-  margin: none;
-  border: none;
+  padding: 15px;
   height: 45px;
+  width: 250px;
 }
 
 nav {
@@ -144,10 +144,16 @@ a {
   color: inherit;
   text-decoration: none;
   position: relative;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 5px;
+  height: 100%;
 }
 
 .nav {
-  padding: 30px 15px;
+  padding: 20px 15px;
   transition-duration: 0.2s;
 }
 

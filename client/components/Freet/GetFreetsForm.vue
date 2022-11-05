@@ -12,7 +12,7 @@
         </span>
       </h2>
       <button @click="click">
-        Switch to {{ $store.state.showAllFreets ? 'your' : 'global' }} feed <span class="material-symbols-outlined">{{$store.state.showAllFreets ? 'Home' : 'Public'}}</span>
+        Switch to {{ $store.state.showAllFreets ? 'your' : 'global' }} feed <span class="material-symbols-outlined">{{$store.state.showAllFreets ? 'Groups' : 'Public'}}</span>
       </button>
     </div>
     <p class="info">Your feed has freets from users you follow. Global feed has freets from all users.</p>
