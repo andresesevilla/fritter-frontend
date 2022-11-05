@@ -5,10 +5,9 @@
     <section>
       <div>
         <textarea name="content" v-model="content" id="content" placeholder="What's happening?" maxlength="140"></textarea>
+        <p class="info">{{content.length}}/140 characters</p>
       </div>
-      <p class="info">{{content.length}}/140 characters</p>
       <div>
-        <!-- <label for="privatecircle">Private Circle (Optional):</label> -->
         <select name="privatecircle" v-model="privatecircle" id="privatecircle" v-if="$store.state.privatecircles.length">
           <option value="" selected>Post publicly</option>
           <option v-for="privatecircle in $store.state.privatecircles" :value=privatecircle.name>Post to {{privatecircle.name}}</option>
