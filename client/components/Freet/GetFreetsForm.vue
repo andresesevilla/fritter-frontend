@@ -15,7 +15,7 @@
         Switch to {{ $store.state.showAllFreets ? 'your' : 'global' }} feed <span class="material-symbols-outlined">{{$store.state.showAllFreets ? 'Home' : 'Public'}}</span>
       </button>
     </div>
-    <p class="info">Your feed has freets from users you follow. Global feed contains freets from all users.</p>
+    <p class="info">Your feed has freets from users you follow. Global feed has freets from all users.</p>
   </div>
 </template>
 

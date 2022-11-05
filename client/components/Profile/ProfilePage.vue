@@ -15,13 +15,13 @@
           </router-link>
         </section>
         <section v-if="follower && following">
-          <p>You follow each other.</p>
+          <p class="info">You follow each other.</p>
         </section>
         <section v-if="follower && !following">
-          <p>@{{ $route.params.username }} follows you, but you do not follow them back.</p>
+          <p class="info">@{{ $route.params.username }} follows you, but you do not follow them back.</p>
         </section>
         <section v-if="!follower && following">
-          <p>You are following @{{ $route.params.username }}, but they do not follow you back.</p>
+          <p class="info">You are following @{{ $route.params.username }}, but they do not follow you back.</p>
         </section>
         <section v-if="$store.state.freets.length">
           <FreetComponent v-for="freet in $store.state.freets" :key="freet.id" :freet="freet" />
@@ -117,6 +117,7 @@ export default {
             message: `Successfully unfollowed user!`, status: 'success'
           });
           this.following = false;
+          await this.getFreets();
         } catch (e) {
           this.$store.commit('alert', {
             message: e, status: 'error'
