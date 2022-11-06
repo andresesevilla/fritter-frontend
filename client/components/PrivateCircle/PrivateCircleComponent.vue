@@ -6,8 +6,7 @@
     <h3>{{ privatecircle.name }}</h3>
     <ul>
       <li v-for="member in privatecircle.members">
-        <router-link
-          :to="{ name: 'Profile', params: { username: member.username } }">
+        <router-link :to="{ name: 'Profile', params: { username: member.username } }">
           @{{ member.username }}
         </router-link>
       </li>
@@ -55,9 +54,7 @@ export default {
         const r = await fetch(`/api/privatecircles/${this.privatecircle.name}`, options);
         if (!r.ok) {
           const res = await r.json();
-          this.$store.commit('alert', {
-            message: e, status: 'error'
-          });
+          throw new Error(res.error);
         }
         this.$store.commit('refreshPrivateCircles');
         this.$store.commit('alert', {
@@ -107,6 +104,7 @@ export default {
 select {
   margin-left: 10px;
 }
+
 form {
   background-color: inherit;
   position: inherit;

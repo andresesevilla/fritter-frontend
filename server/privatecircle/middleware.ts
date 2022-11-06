@@ -11,10 +11,16 @@ const isValidCreatePrivateCircle = async (req: Request, res: Response, next: Nex
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     if (!name.trim()) {
         res.status(400).json({
-          error: 'Private Circle name must be at least one character long.'
+            error: 'Private Circle name must be at least one character long.'
         });
         return;
-      }
+    }
+    if (!/^[\w\-\s]+$/.test(name)) {
+        res.status(400).json({
+            error: 'Private Circle name must contain only letters, numbers, and spaces.'
+        });
+        return;
+    }
     const privateCircle = await PrivateCircleCollection.findPrivateCircleByOwnerAndName(userId, name);
     if (privateCircle) {
         res.status(409).json({
@@ -28,7 +34,7 @@ const isValidCreatePrivateCircle = async (req: Request, res: Response, next: Nex
 /**
  * Checks if this is a valid Private Circle deletion
  */
- const isValidDeletePrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
+const isValidDeletePrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.params.privateCircle;
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const privateCircle = await PrivateCircleCollection.findPrivateCircleByOwnerAndName(userId, name);
@@ -44,7 +50,7 @@ const isValidCreatePrivateCircle = async (req: Request, res: Response, next: Nex
 /**
  * Checks if this is a valid Private Circle update
  */
- const isValidUpdatePrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
+const isValidUpdatePrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.params.privateCircle;
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const privateCircle = await PrivateCircleCollection.findPrivateCircleByOwnerAndName(userId, name);
@@ -75,7 +81,7 @@ const isValidCreatePrivateCircle = async (req: Request, res: Response, next: Nex
 /**
  * Checks if this is a valid Private Circle update
  */
- const isExistingPrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
+const isExistingPrivateCircle = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.body.private_circle;
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const privateCircle = await PrivateCircleCollection.findPrivateCircleByOwnerAndName(userId, name);
