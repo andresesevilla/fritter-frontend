@@ -4,11 +4,14 @@
 <template>
   <article class="privatecircle">
     <h3>{{ privatecircle.name }}</h3>
-    <section>
-      <router-link v-for="member in privatecircle.members"
-        :to="{ name: 'Profile', params: { username: member.username } }">
-        @{{ member.username }}</router-link>
-    </section>
+    <ul>
+      <li v-for="member in privatecircle.members">
+        <router-link
+          :to="{ name: 'Profile', params: { username: member.username } }">
+          @{{ member.username }}
+        </router-link>
+      </li>
+    </ul>
     <form @submit.prevent="submit" v-on:change="editPrivateCircle">
       <label for="username">Toggle a user's membership:</label>
       <select name="username" v-model="username" id="username">
@@ -98,3 +101,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+select {
+  margin-left: 10px;
+}
+form {
+  background-color: inherit;
+  position: inherit;
+  box-shadow: inherit;
+  padding: 0;
+  align-items: center;
+  box-shadow: none;
+}
+</style>

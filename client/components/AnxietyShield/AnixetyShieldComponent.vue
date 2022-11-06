@@ -1,18 +1,16 @@
 <!-- Component for displaying user's Anxiety Shield -->
 
 <template>
-  <div>
-    <article class="anxietyshield">
-      <section>
-        <h3>Your Anxiety Inducing Topics</h3>
-        <ul>
-          <li v-for="topic in $store.state.shieldedTopics">{{ topic }}</li>
-        </ul>
-      </section>
-    </article>
+  <article class="anxietyshield">
+    <section>
+      <h3>Your Anxiety Inducing Topics</h3>
+      <p v-if=" $store.state.shieldedTopics.length === 0">No topics found.</p>
+      <ul>
+        <li v-for="topic in $store.state.shieldedTopics">{{ topic }}</li>
+      </ul>
+    </section>
     <form @submit.prevent="submit" v-on:change="editAnxietyShield">
-      <h3>Toggle Shielding of a Topic</h3>
-      <label for="topic">Topic:</label>
+      <label for="topic">Toggle shielding of a topic:</label>
       <select name="topic" id="topic" v-model="toggledTopic">
         <option>Death</option>
         <option>Suicide</option>
@@ -23,7 +21,7 @@
         <option>Other Anxiety</option>
       </select>
     </form>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -70,3 +68,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+select {
+  margin-left: 10px;
+}
+form {
+  background-color: inherit;
+  position: inherit;
+  box-shadow: inherit;
+  padding: 0;
+  align-items: center;
+  box-shadow: none;
+}
+</style>

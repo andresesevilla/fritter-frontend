@@ -19,7 +19,9 @@
         {{ freet.content }}
       </p>
 
-      <p v-if="freet.restrictAccess" class="info">Private Circle: {{ freet.restrictAccess }}</p>
+      <p v-if="freet.restrictAccess" class="info">
+        <router-link :to="{ name: 'PrivateCircles' }" class="no-style">Private Circle</router-link>: {{ freet.restrictAccess }}
+      </p>
       <div class="button-row">
         <button @click="deleteFreet" v-if="$store.state.username === freet.author">
           <span class="material-symbols-outlined">Delete</span> Delete
@@ -31,7 +33,9 @@
     </div>
     <div v-else-if="!reporting">
       <h3>
-        Anxiety Shield
+        <router-link :to="{ name: 'Settings' }">
+          Anxiety Shield
+        </router-link>
       </h3>
       <p class="content">This freet by <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
           @{{ freet.author }}</router-link> may contain the following
@@ -51,7 +55,7 @@
       </h3>
       <p class="info">Help users avoid anxiety inducing content by reporting it to Anxiety Shield.</p>
       <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
-        <p>What anxiety inducing topic does this freet contain?</p>
+        <label for="topic">What anxiety inducing topic does this freet contain?</label>
         <select name="topic" id="topic" v-model="reportedTopic">
           <option>Death</option>
           <option>Suicide</option>
@@ -169,6 +173,11 @@ export default {
 </script>
 
 <style scoped>
+.no-style {
+  text-decoration: none;
+  color: inherit;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -187,7 +196,7 @@ form {
   background-color: inherit;
   position: inherit;
   box-shadow: inherit;
-  margin: 0;
+  margin: 0 0 20px 0;
   border-radius: inherit;
   padding: 0;
 
