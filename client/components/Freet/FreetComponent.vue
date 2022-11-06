@@ -119,6 +119,7 @@ export default {
         });
         this.reporting = false;
       } catch (e) {
+        this.reportedTopic = '';
         this.$store.commit('alert', {
           message: e, status: 'error'
         });

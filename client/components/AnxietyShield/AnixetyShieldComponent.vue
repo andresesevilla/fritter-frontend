@@ -60,6 +60,7 @@ export default {
         });
 
       } catch (e) {
+        this.toggledTopic = '';
         this.$store.commit('alert', {
           message: e, status: 'error'
         });

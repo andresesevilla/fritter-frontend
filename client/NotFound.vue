@@ -3,8 +3,9 @@
 <template>
   <main>
     <section>
-      <h2>{{$router.currentRoute.path.startsWith('/@') ? 'User' : 'Page'}} Not Found</h2>
-      <p v-if="$router.currentRoute.path.startsWith('/@')">The user @{{$router.currentRoute.path.slice(2)}} does not exist.</p>
+      <h2>{{ $route.params.username ? 'User' : 'Page' }} Not Found</h2>
+      <p v-if="$route.params.username">The user @{{ $route.params.username }} does not
+        exist.</p>
       <p v-else>The requested page does not exist.</p>
       <h3>
         <router-link to="/">

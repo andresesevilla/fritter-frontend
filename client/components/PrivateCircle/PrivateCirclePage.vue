@@ -50,6 +50,9 @@ export default {
         this.followers = res.map((value) => { return value[desired] });
       } catch (e) {
         this.isValidUsername = false;
+        this.$store.commit('alert', {
+          message: e, status: 'error'
+        });
       }
     },
   }

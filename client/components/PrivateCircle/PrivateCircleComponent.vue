@@ -93,6 +93,7 @@ export default {
         });
 
       } catch (e) {
+        this.username = '';
         this.$store.commit('alert', {
           message: e, status: 'error'
         });
