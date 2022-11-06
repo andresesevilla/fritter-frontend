@@ -85,8 +85,6 @@ export default {
         this.$store.state.filter = null;
         this.$store.state.freets = [];
         this.$store.state.shieldedTopics = [];
-        this.$store.state.alerts = [];
-        this.$store.state.username = null;
         this.$store.state.privateCircles = [];
 
         // Alert user that they have signed out
