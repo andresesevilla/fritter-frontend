@@ -25,7 +25,7 @@ import ChangePasswordForm from '@/components/Settings/ChangePasswordForm.vue';
 import AnxietyShieldComponent from '@/components/AnxietyShield/AnixetyShieldComponent.vue'
 
 export default {
-  name: 'AccountPage',
+  name: 'SettingsPage',
   components: {
     ChangePasswordForm, AnxietyShieldComponent
   }
