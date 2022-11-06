@@ -1,29 +1,28 @@
-<!-- Display freets on profile -->
+<!-- Display follows -->
 
 <template>
-  <div>
-    <main v-if="isValidUsername">
-      <section>
-        <header>
-          <h2>
-            {{ $route.name }}:&nbsp;
-            <router-link :to="{ name: 'Profile', params: { username: $route.params.username } }">
-               @{{ $route.params.username }}
-            </router-link>
-          </h2>
-          <p class="info">@{{ $route.params.username }} {{$route.name === 'Following' ? 'follows' : 'is followed by'}} the following users.</p>
-        </header>
-        <article v-if="follows.length === 0">
-          <h3>No {{ $route.name.toLowerCase() }} found.</h3>
-        </article>
-        <article v-else="follows.length" v-for="follow in follows">
-          <router-link :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
+  <main v-if="isValidUsername">
+    <section>
+      <header>
+        <h2>
+          {{ $route.name }}:&nbsp;
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username } }">
+            @{{ $route.params.username }}
           </router-link>
-        </article>
-      </section>
-    </main>
-    <NotFound v-else />
-  </div>
+        </h2>
+        <p class="info">@{{ $route.params.username }} {{ $route.name === 'Following' ? 'follows' : 'is followed by' }} the
+          following users.</p>
+      </header>
+      <article v-if="follows.length === 0">
+        <h3>No {{ $route.name.toLowerCase() }} found.</h3>
+      </article>
+      <article v-else="follows.length" v-for="follow in follows">
+        <router-link :to="{ name: 'Profile', params: { username: follow } }"> @{{ follow }}
+        </router-link>
+      </article>
+    </section>
+  </main>
+  <NotFound v-else />
 </template>
 
 <script>

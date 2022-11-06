@@ -1,10 +1,8 @@
 <!-- Default page: login and feed -->
 
 <template>
-  <div>
-    <FreetsComponent v-if="$store.state.username" />
-    <LoginComponent v-else />
-  </div>
+  <FreetsComponent v-if="$store.state.username" />
+  <LoginComponent v-else />
 </template>
 
 <script>

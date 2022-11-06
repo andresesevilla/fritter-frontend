@@ -2,8 +2,7 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
-  <article>
-    <div
+    <article
       v-if="!reporting && (!$store.state.shieldedTopics.some((e) => { return freet.topics.includes(e) }) || viewAnyway)">
       <header>
         <h3>
@@ -30,8 +29,8 @@
           <span class="material-symbols-outlined">Security</span> Report Anxiety
         </button>
       </div>
-    </div>
-    <div v-else-if="!reporting">
+    </article>
+    <article v-else-if="!reporting">
       <h3>
         <router-link :to="{ name: 'Settings' }">
           Anxiety Shield
@@ -48,8 +47,8 @@
       </ul>
       <button @click="() => { viewAnyway = true }"><span
           class="material-symbols-outlined">Visibility</span>View</button>
-    </div>
-    <div v-else>
+    </article>
+    <article v-else>
       <h3>
         Anxiety Shield
       </h3>
@@ -67,8 +66,7 @@
         </select>
       </form>
       <button @click="() => { reporting = false }"><span class="material-symbols-outlined">Cancel</span>Cancel</button>
-    </div>
-  </article>
+    </article>
 </template>
 
 <script>

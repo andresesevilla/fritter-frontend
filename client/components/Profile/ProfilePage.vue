@@ -1,7 +1,6 @@
 <!-- Display freets on profile -->
 
 <template>
-  <div>
     <main v-if="isValidUsername">
       <section>
         <header>
@@ -32,7 +31,6 @@
       </section>
     </main>
     <NotFound v-else />
-  </div>
 </template>
 
 <script>
