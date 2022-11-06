@@ -44,7 +44,7 @@ const isValidPassword = (req: Request, res: Response, next: NextFunction) => {
   const passwordRegex = /^\S+$/;
   if (!passwordRegex.test(req.body.password)) {
     res.status(400).json({
-      error: 'Password must be a nonempty string.'
+      error: 'Password must be a nonempty string with no spaces.'
     });
     return;
   }

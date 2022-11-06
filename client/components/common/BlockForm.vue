@@ -36,7 +36,8 @@ export default {
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
-      callback: null // Function to run after successful form submission
+      callback: null, // Function to run after successful form submission
+      validation: null, // Function to run to validate form submission
     };
   },
   methods: {
@@ -49,15 +50,31 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'same-origin' // Sends express-session credentials with request
       };
+
+      let json = null;
       if (this.hasBody) {
-        options.body = JSON.stringify(Object.fromEntries(
+        json = Object.fromEntries(
           this.fields.map(field => {
             const { id, value } = field;
-            field.value = '';
             return [id, value];
           })
-        ));
+        )
+        options.body = JSON.stringify(json);
       }
+
+      if (this.validation) {
+        const error = this.validation(json);
+        if (error) {
+          this.$store.commit('alert', {
+            message: error, status: 'error'
+          });
+          return;
+        }
+      }
+
+      this.fields.map(field => {
+        field.value = '';
+      })
 
       try {
         const r = await fetch(this.url, options);
@@ -112,5 +129,4 @@ form>* {
 form h3 {
   margin-top: 0;
 }
-
 </style>

@@ -4,15 +4,19 @@
   <form @submit.prevent="submit">
     <section>
       <div>
-        <textarea name="content" v-model="content" id="content" placeholder="What's happening?" maxlength="140"></textarea>
-        <p class="info">{{content.length}}/140 characters</p>
+        <textarea name="content" v-model="content" id="content" placeholder="What's happening?"
+          maxlength="140"></textarea>
+        <p class="info">{{ content.length }}/140 characters</p>
       </div>
       <div>
-        <select name="privatecircle" v-model="privatecircle" id="privatecircle" v-if="$store.state.privatecircles.length">
+        <select name="privatecircle" v-model="privatecircle" id="privatecircle"
+          v-if="$store.state.privatecircles.length">
           <option value="" selected>Post publicly</option>
-          <option v-for="privatecircle in $store.state.privatecircles" :value=privatecircle.name>Post to {{privatecircle.name}}</option>
+          <option v-for="privatecircle in $store.state.privatecircles" :value=privatecircle.name>Post to
+            {{ privatecircle.name }}</option>
         </select>
-        <p v-else class="info">Want to post to a smaller audience? Create a <router-link to="privatecircles">Private Circle</router-link>.</p>
+        <p v-else class="info">Want to post to a smaller audience? Create a <router-link to="privatecircles">Private
+            Circle</router-link>.</p>
       </div>
     </section>
     <button type="submit">
@@ -24,7 +28,6 @@
 <script>
 
 export default {
-  name: 'BlockForm',
   async mounted() {
     await this.$store.commit('refreshPrivateCircles');
   },
@@ -36,6 +39,13 @@ export default {
   },
   methods: {
     async submit() {
+      if (!this.content.trim()) {
+        this.$store.commit('alert', {
+          message: 'Freet content must be at least one character long.', status: 'error'
+        });
+        return;
+      }
+
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
