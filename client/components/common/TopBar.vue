@@ -12,10 +12,7 @@
           </h1>
         </header>
       </router-link>
-      <form @submit.prevent="search" v-if="$store.state.username">
-        <input type="text" placeholder="Search for a user..." v-model="usernameToSearch">
-        <button type="submit"><span class="material-symbols-outlined">search</span></button>
-      </form>
+      <SearchComponent />
     </div>
     <div v-if="$store.state.username" class="right">
       <router-link to="/" class="nav">
@@ -44,23 +41,11 @@
 
 
 <script>
+import SearchComponent from '@/components/common/SearchComponent.vue';
+
 export default {
-  data() {
-    return {
-      usernameToSearch: ''
-    }
-  },
+  components: { SearchComponent },
   methods: {
-    search() {
-      let username = this.usernameToSearch;
-      if (username.length > 0) {
-        if (username.startsWith('@')) {
-          username = username.slice(1);
-        }
-        this.$router.push({ name: 'Profile', params: { username: username } });
-        this.usernameToSearch = '';
-      }
-    },
     async signOut() {
       try {
         // Make the request with the URL and options
@@ -107,33 +92,6 @@ export default {
 </script>
 
 <style scoped>
-button {
-  padding: 5px 25px;
-  height: 100%;
-}
-
-form {
-  background-color: inherit;
-  position: inherit;
-  box-shadow: inherit;
-  margin: 0;
-  border-radius: inherit;
-  padding: 0;
-
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-
-  box-shadow: var(--primary-shadow);
-  margin-left: 20px;
-}
-
-input {
-  padding: 15px;
-  height: 45px;
-  width: 250px;
-}
-
 nav {
   padding: 0 2vw;
   display: flex;
