@@ -62,35 +62,46 @@ export default {
       }
     },
     async signOut() {
-      // Make the request with the URL and options
-      const r = await fetch(
-        '/api/users/session',
-        {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin' // Sends express-session credentials with request
+      try {
+        // Make the request with the URL and options
+        const r = await fetch(
+          '/api/users/session',
+          {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin' // Sends express-session credentials with request
+          }
+        );
+        if (!r.ok) {
+          // If response is not okay, we throw an error and enter the catch block
+          const res = await r.json();
+          throw new Error(res.error);
         }
-      );
-      // Update the username to be empty
-      this.$store.commit('setUsername', null);
+        // Update the username to be empty
+        this.$store.commit('setUsername', null);
 
-      // Avoid persisting state across sessions
-      this.$store.state.showAllFreets = false;
-      this.$store.state.filter = null;
-      this.$store.state.freets = [];
-      this.$store.state.shieldedTopics = [];
-      this.$store.state.alerts = [];
-      this.$store.state.username = null;
-      this.$store.state.privateCircles = [];
+        // Avoid persisting state across sessions
+        this.$store.state.showAllFreets = false;
+        this.$store.state.filter = null;
+        this.$store.state.freets = [];
+        this.$store.state.shieldedTopics = [];
+        this.$store.state.alerts = [];
+        this.$store.state.username = null;
+        this.$store.state.privateCircles = [];
 
-      // Navigate home if user is not already home
-      if (this.$router.currentRoute.name !== 'Home') {
-        this.$router.push({ name: 'Home' });
+        // Alert user that they have signed out
+        this.$store.commit('alert', {
+          message: 'You are now signed out!', status: 'success'
+        })
+
+        // Navigate home if user is not already home
+        if (this.$router.currentRoute.name !== 'Home') {
+          this.$router.push({ name: 'Home' });
+        }
+      } catch (e) {
+        this.$set(this.alerts, e, 'error');
+        setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
-      // Alert user that they have signed out
-      this.$store.commit('alert', {
-        message: 'You are now signed out!', status: 'success'
-      })
     }
   }
 };
@@ -99,7 +110,7 @@ export default {
 <style scoped>
 button {
   padding: 5px 25px;
-  height:100%;
+  height: 100%;
 }
 
 form {
