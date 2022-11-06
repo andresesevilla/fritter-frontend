@@ -2,71 +2,72 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
-    <article
-      v-if="!reporting && (!$store.state.shieldedTopics.some((e) => { return freet.topics.includes(e) }) || viewAnyway)">
-      <header>
-        <h3>
-          <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
-            @{{ freet.author }}
-          </router-link>
-        </h3>
-        <div class="info">
-          {{ freet.dateCreated }}
-        </div>
-      </header>
-      <p class="content">
-        {{ freet.content }}
-      </p>
-
-      <p v-if="freet.restrictAccess" class="info">
-        <router-link :to="{ name: 'PrivateCircles' }" class="no-style">Private Circle</router-link>: {{ freet.restrictAccess }}
-      </p>
-      <div class="button-row">
-        <button @click="deleteFreet" v-if="$store.state.username === freet.author">
-          <span class="material-symbols-outlined">Delete</span> Delete
-        </button>
-        <button @click="startReport">
-          <span class="material-symbols-outlined">Security</span> Report Anxiety
-        </button>
-      </div>
-    </article>
-    <article v-else-if="!reporting">
+  <article
+    v-if="!reporting && (!$store.state.shieldedTopics.some((e) => { return freet.topics.includes(e) }) || viewAnyway)">
+    <header>
       <h3>
-        <router-link :to="{ name: 'Settings' }">
-          Anxiety Shield
+        <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
+          @{{ freet.author }}
         </router-link>
       </h3>
-      <p class="content">This freet by <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
-          @{{ freet.author }}</router-link> may contain the following
-        topic(s):
-      </p>
-      <ul>
-        <li v-for="topic in freet.topics" v-if="$store.state.shieldedTopics.includes(topic)">
-          {{ topic }}
-        </li>
-      </ul>
-      <button @click="() => { viewAnyway = true }"><span
-          class="material-symbols-outlined">Visibility</span>View</button>
-    </article>
-    <article v-else>
-      <h3>
+      <div class="info">
+        {{ freet.dateCreated }}
+      </div>
+    </header>
+    <p class="content">
+      {{ freet.content }}
+    </p>
+
+    <p v-if="freet.restrictAccess" class="info">
+      <router-link :to="{ name: 'PrivateCircles' }" class="no-style">Private Circle</router-link>: {{
+          freet.restrictAccess
+      }}
+    </p>
+    <div class="button-row">
+      <button @click="deleteFreet" v-if="$store.state.username === freet.author">
+        <span class="material-symbols-outlined">Delete</span> Delete
+      </button>
+      <button @click="startReport">
+        <span class="material-symbols-outlined">Security</span> Report Anxiety
+      </button>
+    </div>
+  </article>
+  <article v-else-if="!reporting">
+    <h3>
+      <router-link :to="{ name: 'Settings' }">
         Anxiety Shield
-      </h3>
-      <p class="info">Help users avoid anxiety inducing content by reporting it to Anxiety Shield.</p>
-      <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
-        <label for="topic">What anxiety inducing topic does this freet contain?</label>
-        <select name="topic" id="topic" v-model="reportedTopic">
-          <option>Death</option>
-          <option>Suicide</option>
-          <option>Serious Injury or Disease</option>
-          <option>Addiction</option>
-          <option>Sexual Violence</option>
-          <option>Financial Issues</option>
-          <option>Other Anxiety</option>
-        </select>
-      </form>
-      <button @click="() => { reporting = false }"><span class="material-symbols-outlined">Cancel</span>Cancel</button>
-    </article>
+      </router-link>
+    </h3>
+    <p class="content">This freet by <router-link :to="{ name: 'Profile', params: { username: freet.author } }">
+        @{{ freet.author }}</router-link> may contain the following
+      topic(s):
+    </p>
+    <ul>
+      <li v-for="topic in freet.topics" v-if="$store.state.shieldedTopics.includes(topic)">
+        {{ topic }}
+      </li>
+    </ul>
+    <button @click="() => { viewAnyway = true }"><span class="material-symbols-outlined">Visibility</span>View</button>
+  </article>
+  <article v-else>
+    <h3>
+      Anxiety Shield
+    </h3>
+    <p class="info">Help users avoid anxiety inducing content by reporting it to Anxiety Shield.</p>
+    <form @submit.prevent="submit" v-on:change="reportToAnxietyShield">
+      <label for="topic">What anxiety inducing topic does this freet contain?</label>
+      <select name="topic" id="topic" v-model="reportedTopic">
+        <option>Death</option>
+        <option>Suicide</option>
+        <option>Serious Injury or Disease</option>
+        <option>Addiction</option>
+        <option>Sexual Violence</option>
+        <option>Financial Issues</option>
+        <option>Other Anxiety</option>
+      </select>
+    </form>
+    <button @click="() => { reporting = false }"><span class="material-symbols-outlined">Cancel</span>Cancel</button>
+  </article>
 </template>
 
 <script>

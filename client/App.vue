@@ -52,6 +52,7 @@ h3 {
 
 * {
   box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 textarea {
